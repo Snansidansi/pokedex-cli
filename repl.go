@@ -13,10 +13,8 @@ type cliCommand struct {
 	callback    func() error
 }
 
-var commands map[string]cliCommand
-
-func initCommands() {
-	commands = map[string]cliCommand{
+func getCommands() map[string]cliCommand {
+	return map[string]cliCommand{
 		"exit": {
 			name:        "exit",
 			description: "Exit the Pokedex",
@@ -31,9 +29,9 @@ func initCommands() {
 }
 
 func startRepl() {
-	initCommands()
-
+	commands := getCommands()
 	scanner := bufio.NewScanner(os.Stdin)
+
 	for {
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
@@ -59,19 +57,4 @@ func cleanInput(text string) []string {
 	text = strings.ToLower(text)
 	words := strings.Fields(text)
 	return words
-}
-
-func commandExit() error {
-	fmt.Println("Closing the Pokedex... Goodbye!")
-	os.Exit(0)
-	return nil
-}
-
-func commandHelp() error {
-	fmt.Println("Welcome to the Pokedex!")
-	fmt.Print("Usage:\n\n")
-	for _, command := range commands {
-		fmt.Printf("%s: %s\n", command.name, command.description)
-	}
-	return nil
 }
