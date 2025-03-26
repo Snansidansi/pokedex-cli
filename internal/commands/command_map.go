@@ -1,37 +1,37 @@
-package main
+package commands
 
 import (
 	"errors"
 	"fmt"
 
-	"github.com/snansidansi/pokedex-cli/pokeapi"
+	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
-func commandMap(conf *config) error {
+func commandMap(conf *pokeapi.Config) error {
 	if conf == nil {
 		return errors.New("The config pointer is nil - commandMap")
 	}
 
-	if conf.next == "" {
+	if conf.Next == "" {
 		fmt.Println("you're on the last page")
 		return nil
 	}
 
-	locationAreas, err := pokeapi.Getlocations(conf.next)
+	locationAreas, err := pokeapi.Getlocations(conf.Next)
 	if err != nil {
 		return err
 	}
 
 	if locationAreas.Next == nil {
-		conf.next = ""
+		conf.Next = ""
 	} else {
-		conf.next = *locationAreas.Next
+		conf.Next = *locationAreas.Next
 	}
 
 	if locationAreas.Previous == nil {
-		conf.prev = ""
+		conf.Prev = ""
 	} else {
-		conf.prev = *locationAreas.Previous
+		conf.Prev = *locationAreas.Previous
 	}
 
 	for _, area := range locationAreas.Results {

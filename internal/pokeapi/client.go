@@ -5,6 +5,18 @@ import (
 	"net/http"
 )
 
+type Config struct {
+	Next string
+	Prev string
+}
+
+func GetConfig() Config {
+	return Config{
+		Next: "https://pokeapi.co/api/v2/location-area/?limit=20",
+		Prev: "",
+	}
+}
+
 func Getlocations(url string) (location_areas, error) {
 	res, err := http.Get(url)
 	if err != nil {
