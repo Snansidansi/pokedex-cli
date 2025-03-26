@@ -10,7 +10,7 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -25,11 +25,34 @@ func getCommands() map[string]cliCommand {
 			description: "List available commands",
 			callback:    commandHelp,
 		},
+		"map": {
+			name:        "map",
+			description: "List the next 20 locations",
+			callback:    commandMap,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "List the previous 20 locations",
+			callback:    commandMapb,
+		},
+	}
+}
+
+type config struct {
+	next string
+	prev string
+}
+
+func getConfig() config {
+	return config{
+		next: "https://pokeapi.co/api/v2/location-area/?limit=20",
+		prev: "",
 	}
 }
 
 func startRepl() {
 	commands := getCommands()
+	config := getConfig()
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -43,7 +66,7 @@ func startRepl() {
 		}
 
 		if cmd, ok := commands[words[0]]; ok {
-			if err := cmd.callback(); err != nil {
+			if err := cmd.callback(&config); err != nil {
 				fmt.Println(err)
 			}
 			continue
