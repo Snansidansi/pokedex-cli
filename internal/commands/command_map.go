@@ -12,32 +12,41 @@ func commandMap(conf *pokeapi.Config) error {
 		return errors.New("The config pointer is nil - commandMap")
 	}
 
-	if conf.Next == "" {
-		fmt.Println("you're on the last page")
-		return nil
-	}
-
-	locationAreas, err := pokeapi.Getlocations(conf.Next)
+	locationAreas, err := conf.Client.GetLocationAreas(conf.NextLocationURL)
 	if err != nil {
 		return err
 	}
 
-	if locationAreas.Next == nil {
-		conf.Next = ""
-	} else {
-		conf.Next = *locationAreas.Next
+	conf.NextLocationURL = locationAreas.Next
+	conf.PrevLocationURL = locationAreas.Previous
+
+	for _, location := range locationAreas.Results {
+		fmt.Println(location.Name)
 	}
 
-	if locationAreas.Previous == nil {
-		conf.Prev = ""
-	} else {
-		conf.Prev = *locationAreas.Previous
+	return nil
+}
+
+func commandMapb(conf *pokeapi.Config) error {
+	if conf == nil {
+		return errors.New("The config pointer is nil - commandMapb")
 	}
 
-	for _, area := range locationAreas.Results {
-		fmt.Println(area.Name)
+	if conf.PrevLocationURL == nil {
+		return errors.New("you're on the first page")
 	}
-	fmt.Println("")
+
+	locationAreas, err := conf.Client.GetLocationAreas(conf.PrevLocationURL)
+	if err != nil {
+		return err
+	}
+
+	conf.NextLocationURL = locationAreas.Next
+	conf.PrevLocationURL = locationAreas.Previous
+
+	for _, location := range locationAreas.Results {
+		fmt.Println(location.Name)
+	}
 
 	return nil
 }

@@ -10,9 +10,8 @@ import (
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
-func startRepl() {
+func startRepl(config *pokeapi.Config) {
 	commands := commands.GetCommands()
-	config := pokeapi.GetConfig()
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -26,7 +25,7 @@ func startRepl() {
 		}
 
 		if cmd, ok := commands[words[0]]; ok {
-			if err := cmd.Callback(&config); err != nil {
+			if err := cmd.Callback(config); err != nil {
 				fmt.Println(err)
 			}
 			continue
