@@ -28,10 +28,12 @@ func startRepl(config *pokeapi.Config) {
 			if err := cmd.Callback(config); err != nil {
 				fmt.Println(err)
 			}
+			fmt.Println()
 			continue
 		}
 
 		fmt.Println("Unkown command")
+		fmt.Println()
 	}
 }
 
