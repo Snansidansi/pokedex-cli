@@ -3,6 +3,7 @@ package commands
 import (
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
@@ -12,17 +13,15 @@ func commandMap(conf *pokeapi.Config, _ ...string) error {
 		return errors.New("The config pointer is nil - commandMap")
 	}
 
-	location, err := conf.Client.GetLocations(conf.NextLocationURL)
+	locations, err := conf.Client.GetLocations(conf.NextLocationURL)
 	if err != nil {
 		return err
 	}
 
-	conf.NextLocationURL = location.Next
-	conf.PrevLocationURL = location.Previous
+	conf.NextLocationURL = locations.Next
+	conf.PrevLocationURL = locations.Previous
 
-	for _, location := range location.Results {
-		fmt.Println(location.Name)
-	}
+	printLocations(locations)
 
 	return nil
 }
@@ -44,9 +43,15 @@ func commandMapb(conf *pokeapi.Config, _ ...string) error {
 	conf.NextLocationURL = locations.Next
 	conf.PrevLocationURL = locations.Previous
 
-	for _, location := range locations.Results {
-		fmt.Println(location.Name)
-	}
+	printLocations(locations)
 
 	return nil
+}
+
+func printLocations(locations pokeapi.Locations) {
+	for _, location := range locations.Results {
+		splitURL := strings.Split(location.URL, "/")
+		id := splitURL[len(splitURL)-2]
+		fmt.Printf("%v - %s\n", id, location.Name)
+	}
 }

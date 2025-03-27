@@ -12,8 +12,8 @@ func commandExplore(conf *pokeapi.Config, args ...string) error {
 		return errors.New("expecting a single location: 'explore <location-name>'")
 	}
 
-	locationName := args[0]
-	location, err := conf.Client.GetPokemonInLocation(locationName)
+	locationIdentifier := args[0]
+	location, err := conf.Client.GetPokemonInLocation(locationIdentifier)
 	if err != nil {
 		return err
 	}

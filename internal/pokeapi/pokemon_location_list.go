@@ -2,12 +2,13 @@ package pokeapi
 
 import (
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 )
 
-func (c *Client) GetPokemonInLocation(location_name string) (Location, error) {
-	url := baseURL + "/location-area/" + location_name
+func (c *Client) GetPokemonInLocation(location_identifier string) (Location, error) {
+	url := baseURL + "/location-area/" + location_identifier
 
 	data, ok := c.cache.Get(url)
 
@@ -22,6 +23,10 @@ func (c *Client) GetPokemonInLocation(location_name string) (Location, error) {
 			return Location{}, err
 		}
 		defer resp.Body.Close()
+
+		if resp.Status != string(200) {
+			return Location{}, errors.New("location does not exist")
+		}
 
 		data, err = io.ReadAll(resp.Body)
 		if err != nil {
