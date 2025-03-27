@@ -7,7 +7,7 @@ import (
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
-func commandExit(_ *pokeapi.Config) error {
+func commandExit(_ *pokeapi.Config, _ ...string) error {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil

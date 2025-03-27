@@ -7,27 +7,27 @@ import (
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
-func commandMap(conf *pokeapi.Config) error {
+func commandMap(conf *pokeapi.Config, _ ...string) error {
 	if conf == nil {
 		return errors.New("The config pointer is nil - commandMap")
 	}
 
-	locationAreas, err := conf.Client.GetLocationAreas(conf.NextLocationURL)
+	location, err := conf.Client.GetLocations(conf.NextLocationURL)
 	if err != nil {
 		return err
 	}
 
-	conf.NextLocationURL = locationAreas.Next
-	conf.PrevLocationURL = locationAreas.Previous
+	conf.NextLocationURL = location.Next
+	conf.PrevLocationURL = location.Previous
 
-	for _, location := range locationAreas.Results {
+	for _, location := range location.Results {
 		fmt.Println(location.Name)
 	}
 
 	return nil
 }
 
-func commandMapb(conf *pokeapi.Config) error {
+func commandMapb(conf *pokeapi.Config, _ ...string) error {
 	if conf == nil {
 		return errors.New("The config pointer is nil - commandMapb")
 	}
@@ -36,15 +36,15 @@ func commandMapb(conf *pokeapi.Config) error {
 		return errors.New("you're on the first page")
 	}
 
-	locationAreas, err := conf.Client.GetLocationAreas(conf.PrevLocationURL)
+	locations, err := conf.Client.GetLocations(conf.PrevLocationURL)
 	if err != nil {
 		return err
 	}
 
-	conf.NextLocationURL = locationAreas.Next
-	conf.PrevLocationURL = locationAreas.Previous
+	conf.NextLocationURL = locations.Next
+	conf.PrevLocationURL = locations.Previous
 
-	for _, location := range locationAreas.Results {
+	for _, location := range locations.Results {
 		fmt.Println(location.Name)
 	}
 

@@ -24,8 +24,14 @@ func startRepl(config *pokeapi.Config) {
 			continue
 		}
 
-		if cmd, ok := commands[words[0]]; ok {
-			if err := cmd.Callback(config); err != nil {
+		commandName := words[0]
+		var commandArgs []string = nil
+		if len(words) > 1 {
+			commandArgs = words[1:]
+		}
+
+		if cmd, ok := commands[commandName]; ok {
+			if err := cmd.Callback(config, commandArgs...); err != nil {
 				fmt.Println(err)
 			}
 			fmt.Println()

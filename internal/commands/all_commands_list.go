@@ -5,7 +5,7 @@ import "github.com/snansidansi/pokedex-cli/internal/pokeapi"
 type CliCommand struct {
 	Name        string
 	Description string
-	Callback    func(*pokeapi.Config) error
+	Callback    func(*pokeapi.Config, ...string) error
 }
 
 func GetCommands() map[string]CliCommand {
@@ -29,6 +29,11 @@ func GetCommands() map[string]CliCommand {
 			Name:        "mapb",
 			Description: "List the previous 20 locations",
 			Callback:    commandMapb,
+		},
+		"explore": {
+			Name:        "explore",
+			Description: "Explore the given location",
+			Callback:    commandExplore,
 		},
 	}
 }
