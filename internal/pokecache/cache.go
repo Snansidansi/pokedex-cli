@@ -37,6 +37,7 @@ func (c *Cache) Add(key string, data []byte) {
 	c.entries[key] = cacheEntry
 	c.mu.Unlock()
 }
+
 func (c *Cache) Get(key string) ([]byte, bool) {
 	c.mu.Lock()
 	val, ok := c.entries[key]

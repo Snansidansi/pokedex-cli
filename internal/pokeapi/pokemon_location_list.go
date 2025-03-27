@@ -34,6 +34,11 @@ func (c *Client) GetPokemonInLocation(location_name string) (Location, error) {
 		return Location{}, err
 	}
 
-	c.cache.Add(url, data)
+	cacheData, err := json.Marshal(pokemonInLocation)
+	if err != nil {
+		return pokemonInLocation, nil
+	}
+	c.cache.Add(url, cacheData)
+
 	return pokemonInLocation, nil
 }

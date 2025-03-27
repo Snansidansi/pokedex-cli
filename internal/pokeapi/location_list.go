@@ -37,6 +37,11 @@ func (c *Client) GetLocations(inputURL *string) (Locations, error) {
 		return Locations{}, err
 	}
 
-	c.cache.Add(url, data)
+	cacheData, err := json.Marshal(locations)
+	if err != nil {
+		return locations, nil
+	}
+	c.cache.Add(url, cacheData)
+
 	return locations, nil
 }
