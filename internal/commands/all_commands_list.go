@@ -50,5 +50,10 @@ func GetCommands() map[string]CliCommand {
 			Description: "Show your pokedex",
 			Callback:    commandPokedex,
 		},
+		"reset": {
+			Name:        "reset",
+			Description: "reset your progress",
+			Callback:    commandReset,
+		},
 	}
 }

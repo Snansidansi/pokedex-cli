@@ -22,7 +22,7 @@ func commandCatch(conf *pokeapi.Config, args ...string) error {
 		return err
 	}
 
-	catchDifficulty := float64(pokemon.BaseExperience) / 4.5
+	catchDifficulty := float64(pokemon.BaseExperience) / 3.85
 	catchChance := 100 - int(catchDifficulty)
 	catchChance = max(minCatchChance, catchChance)
 	randNum := rand.Intn(101) + 1
