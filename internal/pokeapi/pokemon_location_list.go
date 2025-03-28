@@ -24,7 +24,7 @@ func (c *Client) GetPokemonInLocation(location_identifier string) (Location, err
 		}
 		defer resp.Body.Close()
 
-		if resp.Status != string(200) {
+		if resp.StatusCode != http.StatusOK {
 			return Location{}, errors.New("location does not exist")
 		}
 
