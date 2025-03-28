@@ -12,7 +12,7 @@ func GetCommands() map[string]CliCommand {
 	return map[string]CliCommand{
 		"exit": {
 			Name:        "exit",
-			Description: "Exit the Pokedex",
+			Description: "Save and exit the Pokedex",
 			Callback:    commandExit,
 		},
 		"help": {
