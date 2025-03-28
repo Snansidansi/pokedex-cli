@@ -7,7 +7,7 @@ import (
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
-func CommandInspect(conf *pokeapi.Config, args ...string) error {
+func commandInspect(conf *pokeapi.Config, args ...string) error {
 	if len(args) != 1 {
 		return errors.New("expecting pokemon name")
 	}
