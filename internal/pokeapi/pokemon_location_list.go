@@ -7,8 +7,8 @@ import (
 	"net/http"
 )
 
-func (c *Client) GetPokemonInLocation(location_identifier string) (Location, error) {
-	url := baseURL + "/location-area/" + location_identifier
+func (c *Client) GetPokemonInLocation(locationNameOrID string) (Location, error) {
+	url := baseURL + "/location-area/" + locationNameOrID
 
 	data, ok := c.cache.Get(url)
 
@@ -40,10 +40,9 @@ func (c *Client) GetPokemonInLocation(location_identifier string) (Location, err
 	}
 
 	cacheData, err := json.Marshal(pokemonInLocation)
-	if err != nil {
-		return pokemonInLocation, nil
+	if err == nil {
+		c.cache.Add(url, cacheData)
 	}
-	c.cache.Add(url, cacheData)
 
 	return pokemonInLocation, nil
 }
