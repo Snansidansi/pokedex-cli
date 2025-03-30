@@ -24,7 +24,7 @@ func commandCatch(conf *pokeapi.Config, args ...string) error {
 	}
 
 	pokeball := choosePokeBall(&pokemon)
-	catchChance := pokemon.CalcCatchChance(pokeball)
+	catchChance := pokemon.CalcCatchChance(pokeball.CatchRateMultiplier)
 	catched := pokemon.Catch(pokeball)
 
 	fmt.Printf("Chance to catch %s: %v %%\n", pokemon.Name, catchChance)
@@ -56,7 +56,7 @@ func choosePokeBall(pokemon *pokeapi.Pokemon) pokeapi.PokeBall {
 	fmt.Println("Please select a Poke Ball (type nothing for the default ball):")
 
 	for _, pokeBall := range availablePokeBalls {
-		catchChance := pokemon.CalcCatchChance(pokeBall)
+		catchChance := pokemon.CalcCatchChance(pokeBall.CatchRateMultiplier)
 		fmt.Printf(" - %s (%v %%)\n", pokeBall.Name, catchChance)
 	}
 	fmt.Println()

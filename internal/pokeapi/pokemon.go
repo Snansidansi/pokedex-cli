@@ -44,7 +44,7 @@ type Pokemon struct {
 }
 
 func (p *Pokemon) Catch(pokeball PokeBall) (success bool) {
-	catchChance := p.CalcCatchChance(pokeball)
+	catchChance := p.CalcCatchChance(pokeball.CatchRateMultiplier)
 
 	randNum := rand.Intn(101) + 1
 	catched := (randNum <= catchChance)
@@ -52,9 +52,13 @@ func (p *Pokemon) Catch(pokeball PokeBall) (success bool) {
 	return catched
 }
 
-func (p *Pokemon) CalcCatchChance(pokeball PokeBall) int {
+func (p *Pokemon) CalcCatchChance(catchChanceMultiplier float64) int {
+	if catchChanceMultiplier == GetPokeballs()["Master Ball"].CatchRateMultiplier {
+		return 100
+	}
+
 	const minCatchChance = 5
-	catchDifficulty := float64(p.BaseExperience) / (3.5 * (pokeball.CatchRateMultiplier * 0.5))
+	catchDifficulty := float64(p.BaseExperience) / (3.5 * catchChanceMultiplier * 0.5)
 
 	catchChance := 100 - int(catchDifficulty)
 	catchChance = max(minCatchChance, catchChance)
