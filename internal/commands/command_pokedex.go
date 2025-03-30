@@ -13,7 +13,7 @@ func commandPokedex(conf *pokeapi.Config, _ ...string) error {
 	}
 
 	fmt.Println("Your Pokedex:")
-	for pokemonName, _ := range conf.Pokedex {
+	for pokemonName := range conf.Pokedex {
 		fmt.Printf(" - %s\n", pokemonName)
 	}
 	return nil

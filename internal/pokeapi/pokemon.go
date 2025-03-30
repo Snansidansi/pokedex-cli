@@ -1,5 +1,7 @@
 package pokeapi
 
+import "math/rand"
+
 type Pokemon struct {
 	ID             int    `json:"id"`
 	Name           string `json:"name"`
@@ -39,4 +41,23 @@ type Pokemon struct {
 			URL  string `json:"url"`
 		} `json:"type"`
 	} `json:"types"`
+}
+
+func (p *Pokemon) Catch(pokeball PokeBall) (success bool) {
+	catchChance := p.CalcCatchChance(pokeball)
+
+	randNum := rand.Intn(101) + 1
+	catched := (randNum <= catchChance)
+
+	return catched
+}
+
+func (p *Pokemon) CalcCatchChance(pokeball PokeBall) int {
+	const minCatchChance = 5
+	catchDifficulty := float64(p.BaseExperience) / (3.5 * (pokeball.CatchRateMultiplier * 0.5))
+
+	catchChance := 100 - int(catchDifficulty)
+	catchChance = max(minCatchChance, catchChance)
+
+	return catchChance
 }
