@@ -1,4 +1,4 @@
-package commands
+package cmdmenu
 
 import "github.com/snansidansi/pokedex-cli/internal/pokeapi"
 

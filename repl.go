@@ -6,12 +6,12 @@ import (
 	"os"
 	"strings"
 
-	"github.com/snansidansi/pokedex-cli/internal/commands"
+	"github.com/snansidansi/pokedex-cli/internal/commands/cmdmenu"
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
 func startRepl(config *pokeapi.Config) {
-	commands := commands.GetCommands()
+	commands := cmdmenu.GetCommands()
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
