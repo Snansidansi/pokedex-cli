@@ -16,8 +16,8 @@ func main() {
 	}
 
 	config := pokeapi.Config{
-		Client:  pokeapi.NewClient(5*time.Second, 2*time.Minute, 5*time.Minute),
-		Pokedex: make(map[string]pokeapi.Pokemon),
+		Client:     pokeapi.NewClient(5*time.Second, 2*time.Minute, 5*time.Minute),
+		PlayerData: pokeapi.NewPlayerData(),
 		SaveFile: pokeapi.SaveFile{
 			Dir:  workingDir,
 			Name: "saveFile.txt",

@@ -7,31 +7,18 @@ import (
 
 func TestSaveAndLoadData(t *testing.T) {
 	tempDir := t.TempDir()
-	expectedPokedex := map[string]Pokemon{
-		"testmon": {
-			Name:           "testmon",
-			Weight:         23,
-			Height:         35,
-			BaseExperience: 67,
-			IsDefault:      true,
-		},
-		"testmon2": {
+	expectedPlayerData := NewPlayerData()
+	expectedPlayerData.Pokedex.Add("testmon1")
+	expectedPlayerData.Pokedex.Add("testmon2")
 
-			Name:           "testmon2",
-			Weight:         65,
-			Height:         96,
-			BaseExperience: 111,
-			IsDefault:      false,
-		},
-	}
 	saveFile := SaveFile{
 		Dir:  tempDir,
 		Name: "testSaveFile.txt",
 	}
 
 	inputConfig := Config{
-		Pokedex:  expectedPokedex,
-		SaveFile: saveFile,
+		PlayerData: expectedPlayerData,
+		SaveFile:   saveFile,
 	}
 
 	outputConfig := Config{
@@ -50,10 +37,10 @@ func TestSaveAndLoadData(t *testing.T) {
 		return
 	}
 
-	if !reflect.DeepEqual(inputConfig.Pokedex, outputConfig.Pokedex) {
+	if !reflect.DeepEqual(inputConfig.PlayerData, outputConfig.PlayerData) {
 		t.Error("saved data and loaded data are unequal")
-		t.Errorf("saved data: %v", inputConfig.Pokedex)
-		t.Errorf("loaded data: %v", outputConfig.Pokedex)
+		t.Errorf("saved data: %v", inputConfig.PlayerData)
+		t.Errorf("loaded data: %v", outputConfig.PlayerData)
 		return
 	}
 }

@@ -42,7 +42,7 @@ func commandCatch(conf *pokeapi.Config, args ...string) error {
 		return nil
 	}
 
-	conf.Pokedex[pokemon.Name] = pokemon
+	conf.PlayerData.Pokedex.Add(pokemon.Name)
 	fmt.Printf("%s was caught!\n", pokemon.Name)
 
 	return nil

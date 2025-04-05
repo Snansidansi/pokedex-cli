@@ -4,6 +4,6 @@ type Config struct {
 	Client          Client
 	NextLocationURL *string
 	PrevLocationURL *string
-	Pokedex         map[string]Pokemon
+	PlayerData      PlayerData
 	SaveFile        SaveFile
 }

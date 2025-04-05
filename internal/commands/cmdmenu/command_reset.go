@@ -23,7 +23,7 @@ func commandReset(conf *pokeapi.Config, args ...string) error {
 		return err
 	}
 
-	conf.Pokedex = make(map[string]pokeapi.Pokemon)
+	conf.PlayerData = pokeapi.NewPlayerData()
 	fmt.Println("resetted data successfuly")
 
 	return nil

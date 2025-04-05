@@ -11,16 +11,8 @@ type SaveFile struct {
 	Name string
 }
 
-type SaveData struct {
-	Pokedex map[string]Pokemon `json:"pokedex"`
-}
-
 func (c *Config) Save() error {
-	data := SaveData{
-		c.Pokedex,
-	}
-
-	jsonData, err := json.Marshal(data)
+	jsonData, err := json.Marshal(c.PlayerData)
 	if err != nil {
 		return err
 	}
@@ -49,12 +41,12 @@ func (c *Config) Load() error {
 		return err
 	}
 
-	saveData := SaveData{}
-	if err := json.Unmarshal(data, &saveData); err != nil {
+	loadedData := PlayerData{}
+	if err := json.Unmarshal(data, &loadedData); err != nil {
 		return err
 	}
 
-	c.Pokedex = saveData.Pokedex
+	c.PlayerData = loadedData
 
 	return nil
 }

@@ -13,11 +13,20 @@ func commandInspect(conf *pokeapi.Config, args ...string) error {
 	}
 
 	pokemonName := args[0]
-	pokemon, ok := conf.Pokedex[pokemonName]
-	if !ok {
+	if !conf.PlayerData.Pokedex.Contains(pokemonName) {
 		return fmt.Errorf("you have not caught %s", pokemonName)
 	}
 
+	pokemon, err := conf.Client.GetPokemon(pokemonName)
+	if err != nil {
+		return err
+	}
+
+	printPokemonData(pokemon)
+	return nil
+}
+
+func printPokemonData(pokemon pokeapi.Pokemon) {
 	fmt.Printf("Name: %s\n", pokemon.Name)
 	fmt.Printf("Height: %v\n", pokemon.Height)
 	fmt.Printf("Weight: %v\n", pokemon.Weight)
@@ -37,6 +46,4 @@ func commandInspect(conf *pokeapi.Config, args ...string) error {
 	for i := range pokemon.Types {
 		fmt.Printf(" - %s\n", pokemon.Types[i].Type.Name)
 	}
-
-	return nil
 }

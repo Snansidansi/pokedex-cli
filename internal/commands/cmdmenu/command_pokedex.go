@@ -7,13 +7,13 @@ import (
 )
 
 func commandPokedex(conf *pokeapi.Config, _ ...string) error {
-	if len(conf.Pokedex) == 0 {
+	if conf.PlayerData.Pokedex.IsEmpty() {
 		fmt.Println("Your Pokedex is empty!")
 		return nil
 	}
 
 	fmt.Println("Your Pokedex:")
-	for pokemonName := range conf.Pokedex {
+	for _, pokemonName := range conf.PlayerData.Pokedex.GetAll() {
 		fmt.Printf(" - %s\n", pokemonName)
 	}
 	return nil
