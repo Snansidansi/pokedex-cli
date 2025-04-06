@@ -5,8 +5,8 @@ import (
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
-func pokemonDTOToEntity(pokemonDTO *pokeapi.PokemonDTO) *entities.Pokemon {
-	return &entities.Pokemon{
+func PokemonDTOToEntity(pokemonDTO *pokeapi.PokemonDTO) entities.Pokemon {
+	return entities.Pokemon{
 		ID:                pokemonDTO.ID,
 		Name:              pokemonDTO.Name,
 		BaseExperience:    pokemonDTO.BaseExperience,

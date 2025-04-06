@@ -9,11 +9,11 @@ import (
 
 func TestPokebox_GetDefaultName(t *testing.T) {
 	defaultPokebox := playerdata.Pokebox{
-		"pikachu1":     entities.Pokemon{},
+		"pikachu":      entities.Pokemon{},
 		"pikachu2":     entities.Pokemon{},
 		"namedPokemon": entities.Pokemon{},
-		"bulbasaur1":   entities.Pokemon{},
-		"charmander1":  entities.Pokemon{},
+		"bulbasaur":    entities.Pokemon{},
+		"charmander":   entities.Pokemon{},
 		"charmander3":  entities.Pokemon{},
 	}
 	cases := []struct {
@@ -26,13 +26,13 @@ func TestPokebox_GetDefaultName(t *testing.T) {
 			name:        "Get next name with empty pokebox",
 			pokebox:     playerdata.Pokebox{},
 			pokemonName: "charmander",
-			expected:    "charmander1",
+			expected:    "charmander",
 		},
 		{
 			name:        "Get next name with not contained name and filled pokebox",
 			pokebox:     defaultPokebox,
 			pokemonName: "squirtle",
-			expected:    "squirtle1",
+			expected:    "squirtle",
 		},
 		{
 			name:        "Get next name with pokemon already existing once",
@@ -56,7 +56,7 @@ func TestPokebox_GetDefaultName(t *testing.T) {
 
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
-			actual := c.pokebox.GetDefaultName(c.pokemonName)
+			actual := c.pokebox.GetNextAvailableName(c.pokemonName)
 			if actual != c.expected {
 				t.Errorf("GetDefaultName() = %v, want %v", actual, c.expected)
 				return

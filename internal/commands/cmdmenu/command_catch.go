@@ -9,6 +9,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/snansidansi/pokedex-cli/internal/entities/mapper"
+	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
@@ -18,17 +20,34 @@ func commandCatch(conf *pokeapi.Config, args ...string) error {
 	}
 
 	pokemonNameOrID := args[0]
-	pokemon, err := conf.Client.GetPokemon(pokemonNameOrID)
+	pokemonDTO, err := conf.Client.GetPokemon(pokemonNameOrID)
 	if err != nil {
 		return err
 	}
 
-	pokeball := choosePokeBall(&pokemon)
-	catchChance := pokemon.CalcCatchChance(pokeball.CatchRateMultiplier)
-	catched := pokemon.Catch(pokeball)
+	pokeball := choosePokeBall(&pokemonDTO)
+	catchChance := pokemonDTO.CalcCatchChance(pokeball.CatchRateMultiplier)
+	catched := pokemonDTO.Catch(pokeball)
 
-	fmt.Printf("Chance to catch %s: %v %%\n", pokemon.Name, catchChance)
-	fmt.Printf("Throwing a Pokeball at %s...\n", pokemon.Name)
+	printCatchProcess(pokemonDTO.Name, catchChance)
+
+	if !catched {
+		fmt.Printf("%s escaped!\n", pokemonDTO.Name)
+		return nil
+	}
+
+	conf.PlayerData.Pokedex.Add(pokemonDTO.Name)
+	fmt.Printf("%s was caught!\n", pokemonDTO.Name)
+
+	pokemonName := choosePokemonName(*conf.PlayerData.Pokebox, pokemonDTO.Name)
+	(*conf.PlayerData.Pokebox)[pokemonName] = mapper.PokemonDTOToEntity(&pokemonDTO)
+
+	return nil
+}
+
+func printCatchProcess(pokemonName string, catchChance int) {
+	fmt.Printf("Chance to catch %s: %v %%\n", pokemonName, catchChance)
+	fmt.Printf("Throwing a Pokeball at %s...\n", pokemonName)
 
 	catchTries := rand.Intn(4) + 3
 	for range catchTries {
@@ -36,16 +55,23 @@ func commandCatch(conf *pokeapi.Config, args ...string) error {
 		time.Sleep(450 * time.Millisecond)
 	}
 	fmt.Print(" ")
+}
 
-	if !catched {
-		fmt.Printf("%s escaped!\n", pokemon.Name)
-		return nil
+func choosePokemonName(pokebox playerdata.Pokebox, pokemonName string) string {
+	fmt.Println("")
+	fmt.Println("Name your Pokemon (type nothing for the default name):")
+	fmt.Print("Name > ")
+
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	inputName := scanner.Text()
+
+	fmt.Println("")
+
+	if inputName == "" {
+		return pokebox.GetNextAvailableName(pokemonName)
 	}
-
-	conf.PlayerData.Pokedex.Add(pokemon.Name)
-	fmt.Printf("%s was caught!\n", pokemon.Name)
-
-	return nil
+	return pokebox.GetNextAvailableName(inputName)
 }
 
 func choosePokeBall(pokemon *pokeapi.PokemonDTO) pokeapi.PokeBall {
