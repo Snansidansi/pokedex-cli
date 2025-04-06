@@ -50,11 +50,13 @@ func TestNewPokedex(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		pokedex := NewPokedex(c.keysToAdd...)
-		if diff := cmp.Diff(c.expectedPokedex, pokedex); diff != "" {
-			t.Errorf("%s:\nNewPokedex() mismatch (-want +got):\n%s", c.name, diff)
-			return
-		}
+		t.Run(c.name, func(t *testing.T) {
+			pokedex := NewPokedex(c.keysToAdd...)
+			if diff := cmp.Diff(c.expectedPokedex, pokedex); diff != "" {
+				t.Errorf("NewPokedex() mismatch (-want +got):\n%s", diff)
+				return
+			}
+		})
 	}
 }
 
@@ -98,12 +100,14 @@ func TestPokedex_Add(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		c.initialPokedex.Add(c.keyToAdd)
+		t.Run(c.name, func(t *testing.T) {
+			c.initialPokedex.Add(c.keyToAdd)
 
-		if diff := cmp.Diff(c.expectedPokedex, c.initialPokedex); diff != "" {
-			t.Errorf("%s:\nAdd() mismatch (-want +got):\n%s", c.name, diff)
-			return
-		}
+			if diff := cmp.Diff(c.expectedPokedex, c.initialPokedex); diff != "" {
+				t.Errorf("%s:\nAdd() mismatch (-want +got):\n%s", c.name, diff)
+				return
+			}
+		})
 	}
 }
 
@@ -138,9 +142,9 @@ func TestContains(t *testing.T) {
 		actual := c.pokedex.Contains(c.checkValue)
 
 		if actual != c.expected {
-			t.Errorf("%s:\nExpected: %v\nActual: %v\n"+
+			t.Errorf("Expected: %v\nActual: %v\n"+
 				"For checkvalue: %s\nIn pokedex: %v\n",
-				c.name, actual, c.expected, c.checkValue, c.pokedex)
+				actual, c.expected, c.checkValue, c.pokedex)
 			return
 		}
 	}
@@ -170,12 +174,14 @@ func TestGetAll(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := c.pokedex.GetAll()
+		t.Run(c.name, func(t *testing.T) {
+			actual := c.pokedex.GetAll()
 
-		if diff := cmp.Diff(c.expected, actual); diff != "" {
-			t.Errorf("%s:\nGetAll() mismatch (-want +got):\n%s", c.name, diff)
-			return
-		}
+			if diff := cmp.Diff(c.expected, actual); diff != "" {
+				t.Errorf("GetAll() mismatch (-want +got):\n%s", diff)
+				return
+			}
+		})
 	}
 }
 
@@ -198,11 +204,13 @@ func TestIsEmpty(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		actual := c.pokedex.IsEmpty()
+		t.Run(c.name, func(t *testing.T) {
+			actual := c.pokedex.IsEmpty()
 
-		if actual != c.expected {
-			t.Errorf("%s:\nExpected: %v\nActual: %v\nPokedex: %v\n", c.name, c.expected, actual, c.pokedex)
-			return
-		}
+			if actual != c.expected {
+				t.Errorf("Expected: %v\nActual: %v\nPokedex: %v\n", c.expected, actual, c.pokedex)
+				return
+			}
+		})
 	}
 }

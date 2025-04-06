@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestCleanInput(t *testing.T) {
 	cases := []struct {
@@ -37,21 +40,23 @@ func TestCleanInput(t *testing.T) {
 		},
 	}
 
-	for _, c := range cases {
-		actual := cleanInput(c.input)
-		if len(actual) != len(c.expected) {
-			t.Errorf("The length of the actual slice (%d) does not match the length of the expected slice (%d)", len(actual), len(c.expected))
-			t.Errorf("Actual slice: %v", actual)
-			t.Errorf("Expected slice: %v", c.expected)
-			return
-		}
-
-		for i, actualWord := range actual {
-			expectedWord := c.expected[i]
-			if expectedWord != actualWord {
-				t.Errorf("The expected and actual are not the same: %s != %s", expectedWord, actualWord)
+	for i, c := range cases {
+		t.Run(fmt.Sprintf("Subtest %v:", i), func(t *testing.T) {
+			actual := cleanInput(c.input)
+			if len(actual) != len(c.expected) {
+				t.Errorf("The length of the actual slice (%d) does not match the length of the expected slice (%d)", len(actual), len(c.expected))
+				t.Errorf("Actual slice: %v", actual)
+				t.Errorf("Expected slice: %v", c.expected)
 				return
 			}
-		}
+
+			for i, actualWord := range actual {
+				expectedWord := c.expected[i]
+				if expectedWord != actualWord {
+					t.Errorf("The expected and actual are not the same: %s != %s", expectedWord, actualWord)
+					return
+				}
+			}
+		})
 	}
 }
