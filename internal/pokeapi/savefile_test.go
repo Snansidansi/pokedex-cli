@@ -3,11 +3,13 @@ package pokeapi
 import (
 	"reflect"
 	"testing"
+
+	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 )
 
 func TestSaveAndLoadData(t *testing.T) {
 	tempDir := t.TempDir()
-	expectedPlayerData := NewPlayerData()
+	expectedPlayerData := playerdata.NewPlayerData()
 	expectedPlayerData.Pokedex.Add("testmon1")
 	expectedPlayerData.Pokedex.Add("testmon2")
 

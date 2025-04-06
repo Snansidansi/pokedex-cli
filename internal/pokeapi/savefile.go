@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"os"
+
+	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 )
 
 type SaveFile struct {
@@ -41,7 +43,7 @@ func (c *Config) Load() error {
 		return err
 	}
 
-	loadedData := PlayerData{}
+	loadedData := playerdata.PlayerData{}
 	if err := json.Unmarshal(data, &loadedData); err != nil {
 		return err
 	}

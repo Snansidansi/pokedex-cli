@@ -1,4 +1,4 @@
-package pokeapi
+package playerdata
 
 import (
 	"testing"

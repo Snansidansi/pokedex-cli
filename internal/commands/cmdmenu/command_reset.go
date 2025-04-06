@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
@@ -23,7 +24,7 @@ func commandReset(conf *pokeapi.Config, args ...string) error {
 		return err
 	}
 
-	conf.PlayerData = pokeapi.NewPlayerData()
+	conf.PlayerData = playerdata.NewPlayerData()
 	fmt.Println("resetted data successfuly")
 
 	return nil

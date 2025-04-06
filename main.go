@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
@@ -17,7 +18,7 @@ func main() {
 
 	config := pokeapi.Config{
 		Client:     pokeapi.NewClient(5*time.Second, 2*time.Minute, 5*time.Minute),
-		PlayerData: pokeapi.NewPlayerData(),
+		PlayerData: playerdata.NewPlayerData(),
 		SaveFile: pokeapi.SaveFile{
 			Dir:  workingDir,
 			Name: "saveFile.txt",

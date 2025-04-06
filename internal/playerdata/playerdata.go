@@ -1,4 +1,4 @@
-package pokeapi
+package playerdata
 
 type PlayerData struct {
 	Pokedex *Pokedex `json:"pokedex"`

@@ -1,9 +1,11 @@
 package pokeapi
 
+import "github.com/snansidansi/pokedex-cli/internal/playerdata"
+
 type Config struct {
 	Client          Client
 	NextLocationURL *string
 	PrevLocationURL *string
-	PlayerData      PlayerData
+	PlayerData      playerdata.PlayerData
 	SaveFile        SaveFile
 }
