@@ -7,35 +7,35 @@ import (
 	"net/http"
 )
 
-func (c *Client) GetPokemon(pokemonNameOrID string) (Pokemon, error) {
+func (c *Client) GetPokemon(pokemonNameOrID string) (PokemonDTO, error) {
 	url := baseURL + "/pokemon/" + pokemonNameOrID
 
 	data, ok := c.cache.Get(url)
 	if !ok {
 		req, err := http.NewRequest("GET", url, nil)
 		if err != nil {
-			return Pokemon{}, err
+			return PokemonDTO{}, err
 		}
 
 		resp, err := c.httpClient.Do(req)
 		if err != nil {
-			return Pokemon{}, err
+			return PokemonDTO{}, err
 		}
 		defer resp.Body.Close()
 
 		if resp.StatusCode != http.StatusOK {
-			return Pokemon{}, errors.New("pokemon does not exist")
+			return PokemonDTO{}, errors.New("pokemon does not exist")
 		}
 
 		data, err = io.ReadAll(resp.Body)
 		if err != nil {
-			return Pokemon{}, err
+			return PokemonDTO{}, err
 		}
 	}
 
-	pokemon := Pokemon{}
+	pokemon := PokemonDTO{}
 	if err := json.Unmarshal(data, &pokemon); err != nil {
-		return Pokemon{}, err
+		return PokemonDTO{}, err
 	}
 
 	cacheData, err := json.Marshal(pokemon)

@@ -48,7 +48,7 @@ func commandCatch(conf *pokeapi.Config, args ...string) error {
 	return nil
 }
 
-func choosePokeBall(pokemon *pokeapi.Pokemon) pokeapi.PokeBall {
+func choosePokeBall(pokemon *pokeapi.PokemonDTO) pokeapi.PokeBall {
 	scanner := bufio.NewScanner(os.Stdin)
 	availablePokeBalls := pokeapi.GetPokeballs()
 

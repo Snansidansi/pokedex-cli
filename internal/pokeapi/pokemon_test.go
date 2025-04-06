@@ -3,7 +3,7 @@ package pokeapi
 import "testing"
 
 func TestCalcCatchChance(t *testing.T) {
-	pokemon := Pokemon{
+	pokemon := PokemonDTO{
 		BaseExperience: 100,
 	}
 	cases := []struct {
@@ -45,7 +45,7 @@ func TestCalcCatchChance(t *testing.T) {
 
 func TestMasterBallMaxHasCatchChance(t *testing.T) {
 	const expectedCatchChance = 100
-	pokemons := []Pokemon{
+	pokemons := []PokemonDTO{
 		{
 			BaseExperience: 0,
 		},

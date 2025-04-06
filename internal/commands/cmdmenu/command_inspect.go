@@ -26,7 +26,7 @@ func commandInspect(conf *pokeapi.Config, args ...string) error {
 	return nil
 }
 
-func printPokemonData(pokemon pokeapi.Pokemon) {
+func printPokemonData(pokemon pokeapi.PokemonDTO) {
 	fmt.Printf("Name: %s\n", pokemon.Name)
 	fmt.Printf("Height: %v\n", pokemon.Height)
 	fmt.Printf("Weight: %v\n", pokemon.Weight)

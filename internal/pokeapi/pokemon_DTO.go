@@ -2,7 +2,7 @@ package pokeapi
 
 import "math/rand"
 
-type Pokemon struct {
+type PokemonDTO struct {
 	ID             int    `json:"id"`
 	Name           string `json:"name"`
 	BaseExperience int    `json:"base_experience"`
@@ -22,10 +22,6 @@ type Pokemon struct {
 		Name string `json:"name"`
 		URL  string `json:"url"`
 	} `json:"forms"`
-	Species struct {
-		Name string `json:"name"`
-		URL  string `json:"url"`
-	} `json:"species"`
 	Stats []struct {
 		BaseStat int `json:"base_stat"`
 		Effort   int `json:"effort"`
@@ -43,7 +39,7 @@ type Pokemon struct {
 	} `json:"types"`
 }
 
-func (p *Pokemon) Catch(pokeball PokeBall) (success bool) {
+func (p *PokemonDTO) Catch(pokeball PokeBall) (success bool) {
 	catchChance := p.CalcCatchChance(pokeball.CatchRateMultiplier)
 
 	randNum := rand.Intn(101) + 1
@@ -52,7 +48,7 @@ func (p *Pokemon) Catch(pokeball PokeBall) (success bool) {
 	return catched
 }
 
-func (p *Pokemon) CalcCatchChance(catchChanceMultiplier float64) int {
+func (p *PokemonDTO) CalcCatchChance(catchChanceMultiplier float64) int {
 	if catchChanceMultiplier == GetPokeballs()["Master Ball"].CatchRateMultiplier {
 		return 100
 	}
