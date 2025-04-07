@@ -2,6 +2,7 @@ package playerdata
 
 import (
 	"fmt"
+	"slices"
 
 	"github.com/snansidansi/pokedex-cli/internal/entities"
 )
@@ -22,4 +23,17 @@ func (p Pokebox) GetNextAvailableName(pokemonName string) string {
 		}
 		return name
 	}
+}
+
+func (p Pokebox) GetAllNamesSorted() []string {
+	sortedPokemon := make([]string, len(p))
+	i := 0
+	for givenName := range p {
+		sortedPokemon[i] = givenName
+		i++
+	}
+
+	slices.Sort(sortedPokemon)
+
+	return sortedPokemon
 }
