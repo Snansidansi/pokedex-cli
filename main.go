@@ -5,8 +5,10 @@ import (
 	"os"
 	"time"
 
+	"github.com/snansidansi/pokedex-cli/internal/commands/cmdmenu"
 	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
+	"github.com/snansidansi/pokedex-cli/internal/repl"
 )
 
 func main() {
@@ -30,5 +32,5 @@ func main() {
 		os.Exit(1)
 	}
 
-	startRepl(&config)
+	repl.StartRepl("Pokedex > ", &config, cmdmenu.GetCommands())
 }

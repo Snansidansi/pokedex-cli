@@ -1,4 +1,4 @@
-package main
+package repl
 
 import (
 	"bufio"
@@ -6,16 +6,15 @@ import (
 	"os"
 	"strings"
 
-	"github.com/snansidansi/pokedex-cli/internal/commands/cmdmenu"
+	"github.com/snansidansi/pokedex-cli/internal/commands"
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
-func startRepl(config *pokeapi.Config) {
-	commands := cmdmenu.GetCommands()
+func StartRepl(promptMessage string, config *pokeapi.Config, commands map[string]commands.Command) {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
-		fmt.Print("Pokedex > ")
+		fmt.Print(promptMessage)
 		scanner.Scan()
 		input := scanner.Text()
 

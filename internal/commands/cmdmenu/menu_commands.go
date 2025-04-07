@@ -1,15 +1,9 @@
 package cmdmenu
 
-import "github.com/snansidansi/pokedex-cli/internal/pokeapi"
+import "github.com/snansidansi/pokedex-cli/internal/commands"
 
-type MenuCommand struct {
-	Name        string
-	Description string
-	Callback    func(*pokeapi.Config, ...string) error
-}
-
-func GetCommands() map[string]MenuCommand {
-	return map[string]MenuCommand{
+func GetCommands() map[string]commands.Command {
+	return map[string]commands.Command{
 		"exit": {
 			Name:        "exit",
 			Description: "Save and exit the Pokedex",
