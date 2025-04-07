@@ -1,6 +1,10 @@
 package pokeapi
 
-import "math/rand"
+import (
+	"math/rand"
+
+	"github.com/snansidansi/pokedex-cli/internal/entities"
+)
 
 type PokemonDTO struct {
 	ID             int    `json:"id"`
@@ -39,7 +43,7 @@ type PokemonDTO struct {
 	} `json:"types"`
 }
 
-func (p *PokemonDTO) Catch(pokeball PokeBall) (success bool) {
+func (p *PokemonDTO) Catch(pokeball entities.PokeBall) (success bool) {
 	if pokeball.Name == "Master Ball" {
 		return true
 	}
@@ -53,7 +57,7 @@ func (p *PokemonDTO) Catch(pokeball PokeBall) (success bool) {
 }
 
 func (p *PokemonDTO) CalcCatchChance(catchChanceMultiplier float64) int {
-	if catchChanceMultiplier == GetPokeballs()["Master Ball"].CatchRateMultiplier {
+	if catchChanceMultiplier == entities.GetPokeballs()["Master Ball"].CatchRateMultiplier {
 		return 100
 	}
 

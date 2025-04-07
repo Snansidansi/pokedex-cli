@@ -3,6 +3,8 @@ package pokeapi
 import (
 	"fmt"
 	"testing"
+
+	"github.com/snansidansi/pokedex-cli/internal/entities"
 )
 
 func TestCalcCatchChance(t *testing.T) {
@@ -76,7 +78,7 @@ func TestMasterBallMaxHasCatchChance(t *testing.T) {
 
 	for i, pokemon := range pokemons {
 		t.Run(fmt.Sprintf("Subtest %v:", i), func(t *testing.T) {
-			masterBallCatchChanceMulti := GetPokeballs()["Master Ball"].CatchRateMultiplier
+			masterBallCatchChanceMulti := entities.GetPokeballs()["Master Ball"].CatchRateMultiplier
 			actualCatchChance := pokemon.CalcCatchChance(masterBallCatchChanceMulti)
 
 			if actualCatchChance != expectedCatchChance {

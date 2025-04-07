@@ -1,4 +1,4 @@
-package pokeapi
+package entities
 
 type PokeBall struct {
 	Name                string

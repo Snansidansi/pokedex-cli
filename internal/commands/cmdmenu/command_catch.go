@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/snansidansi/pokedex-cli/internal/entities"
 	"github.com/snansidansi/pokedex-cli/internal/entities/mapper"
 	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
@@ -74,9 +75,9 @@ func choosePokemonName(pokebox playerdata.Pokebox, pokemonName string) string {
 	return pokebox.GetNextAvailableName(inputName)
 }
 
-func choosePokeBall(pokemon *pokeapi.PokemonDTO) pokeapi.PokeBall {
+func choosePokeBall(pokemon *pokeapi.PokemonDTO) entities.PokeBall {
 	scanner := bufio.NewScanner(os.Stdin)
-	availablePokeBalls := pokeapi.GetPokeballs()
+	availablePokeBalls := entities.GetPokeballs()
 
 	fmt.Println("--------------------------------")
 	fmt.Println("Please select a Poke Ball (type nothing for the default ball):")
