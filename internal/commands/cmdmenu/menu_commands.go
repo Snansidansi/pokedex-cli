@@ -2,14 +2,14 @@ package cmdmenu
 
 import "github.com/snansidansi/pokedex-cli/internal/pokeapi"
 
-type CliCommand struct {
+type MenuCommand struct {
 	Name        string
 	Description string
 	Callback    func(*pokeapi.Config, ...string) error
 }
 
-func GetCommands() map[string]CliCommand {
-	return map[string]CliCommand{
+func GetCommands() map[string]MenuCommand {
+	return map[string]MenuCommand{
 		"exit": {
 			Name:        "exit",
 			Description: "Save and exit the Pokedex",
@@ -52,8 +52,13 @@ func GetCommands() map[string]CliCommand {
 		},
 		"reset": {
 			Name:        "reset",
-			Description: "reset your progress",
+			Description: "Reset your progress",
 			Callback:    commandReset,
+		},
+		"pokebox": {
+			Name:        "pokebox",
+			Description: "Enter the pokebox and list available operations",
+			Callback:    commandPokebox,
 		},
 	}
 }
