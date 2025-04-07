@@ -40,6 +40,10 @@ type PokemonDTO struct {
 }
 
 func (p *PokemonDTO) Catch(pokeball PokeBall) (success bool) {
+	if pokeball.Name == "Master Ball" {
+		return true
+	}
+
 	catchChance := p.CalcCatchChance(pokeball.CatchRateMultiplier)
 
 	randNum := rand.Intn(101) + 1
