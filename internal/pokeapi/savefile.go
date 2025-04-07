@@ -4,13 +4,15 @@ import (
 	"encoding/json"
 	"errors"
 	"os"
+	"path"
 
 	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 )
 
+const saveFileName = ".saveFile.json"
+
 type SaveFile struct {
-	Dir  string
-	Name string
+	Dir string
 }
 
 func (c *Config) Save() error {
@@ -19,13 +21,13 @@ func (c *Config) Save() error {
 		return err
 	}
 
-	tempFilePath := c.SaveFile.Dir + "/tmp-savefile.txt"
+	tempFilePath := c.SaveFile.Dir + "/.tmp-savefile.json"
 	if err := os.WriteFile(tempFilePath, jsonData, 0644); err != nil {
 		os.Remove(tempFilePath)
 		return err
 	}
 
-	saveFilePath := c.SaveFile.Dir + "/" + c.SaveFile.Name
+	saveFilePath := c.getSaveFilePath()
 	os.Remove(saveFilePath)
 	os.Rename(tempFilePath, saveFilePath)
 
@@ -33,7 +35,7 @@ func (c *Config) Save() error {
 }
 
 func (c *Config) Load() error {
-	saveFilePath := c.SaveFile.Dir + "/" + c.SaveFile.Name
+	saveFilePath := c.getSaveFilePath()
 
 	data, err := os.ReadFile(saveFilePath)
 	if err != nil {
@@ -51,4 +53,18 @@ func (c *Config) Load() error {
 	c.PlayerData = loadedData
 
 	return nil
+}
+
+func (c *Config) Reset() error {
+	saveFilePath := c.getSaveFilePath()
+	if err := os.Remove(saveFilePath); err != nil {
+		return err
+	}
+
+	c.PlayerData = playerdata.NewPlayerData()
+	return nil
+}
+
+func (c *Config) getSaveFilePath() string {
+	return path.Join(c.SaveFile.Dir, saveFileName)
 }

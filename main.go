@@ -20,8 +20,7 @@ func main() {
 		Client:     pokeapi.NewClient(5*time.Second, 2*time.Minute, 5*time.Minute),
 		PlayerData: playerdata.NewPlayerData(),
 		SaveFile: pokeapi.SaveFile{
-			Dir:  workingDir,
-			Name: "saveFile.txt",
+			Dir: workingDir,
 		},
 	}
 

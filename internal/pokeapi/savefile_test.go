@@ -14,8 +14,7 @@ func TestSaveAndLoadData(t *testing.T) {
 	expectedPlayerData.Pokedex.Add("testmon2")
 
 	saveFile := SaveFile{
-		Dir:  tempDir,
-		Name: "testSaveFile.txt",
+		Dir: tempDir,
 	}
 
 	inputConfig := Config{

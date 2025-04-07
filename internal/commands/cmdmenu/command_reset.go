@@ -3,9 +3,7 @@ package cmdmenu
 import (
 	"errors"
 	"fmt"
-	"os"
 
-	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
@@ -19,13 +17,11 @@ func commandReset(conf *pokeapi.Config, args ...string) error {
 		return errors.New("type 'reset confirm' to reset your progress")
 	}
 
-	saveFilePath := conf.SaveFile.Dir + "/" + conf.SaveFile.Name
-	if err := os.Remove(saveFilePath); err != nil {
+	err := conf.Reset()
+	if err != nil {
 		return err
 	}
 
-	conf.PlayerData = playerdata.NewPlayerData()
 	fmt.Println("resetted data successfuly")
-
 	return nil
 }
