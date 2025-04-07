@@ -3,6 +3,7 @@ package cmdmenu
 import (
 	"errors"
 	"fmt"
+	"os"
 
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
@@ -18,7 +19,7 @@ func commandReset(conf *pokeapi.Config, args ...string) error {
 	}
 
 	err := conf.Reset()
-	if err != nil {
+	if err != nil && !errors.Is(err, os.ErrNotExist) {
 		return err
 	}
 
