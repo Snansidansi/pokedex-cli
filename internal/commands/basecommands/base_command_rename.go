@@ -1,4 +1,4 @@
-package cmdpokebox
+package basecommands
 
 import (
 	"errors"
@@ -7,7 +7,7 @@ import (
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
-func commandRename(conf *pokeapi.Config, args ...string) error {
+func BaseCommandRename(conf *pokeapi.Config, args ...string) error {
 	if len(args) != 2 {
 		return errors.New("Wrong usage of Command.\nUsage: rename <old-name> <new-name>")
 	}

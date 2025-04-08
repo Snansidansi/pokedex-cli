@@ -2,6 +2,7 @@ package cmdpokebox
 
 import (
 	"github.com/snansidansi/pokedex-cli/internal/commands"
+	"github.com/snansidansi/pokedex-cli/internal/commands/basecommands"
 )
 
 func GetCommands() map[string]commands.Command {
@@ -29,7 +30,7 @@ func GetCommands() map[string]commands.Command {
 		"rename": {
 			Name:        "rename",
 			Description: "Rename the specified pokemon to the new given name",
-			Callback:    commandRename,
+			Callback:    basecommands.BaseCommandRename,
 		},
 		"release": {
 			Name:        "release",
