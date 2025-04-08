@@ -15,6 +15,7 @@ func PokemonDTOToEntity(pokemonDTO *pokeapi.PokemonDTO) entities.Pokemon {
 		Order:             pokemonDTO.Order,
 		Weight:            pokemonDTO.Weight,
 		Abilities:         pokemonDTO.Abilities,
+		Stats:             pokemonDTO.Stats,
 		Forms:             pokemonDTO.Forms,
 		Types:             pokemonDTO.Types,
 	}

@@ -21,5 +21,10 @@ func GetCommands() map[string]commands.Command {
 			Description: "Exit the pokebox",
 			Callback:    commandBack,
 		},
+		"inspect": {
+			Name:        "inspect",
+			Description: "Inspect the specified pokemon from your pokebox",
+			Callback:    commandInspect,
+		},
 	}
 }
