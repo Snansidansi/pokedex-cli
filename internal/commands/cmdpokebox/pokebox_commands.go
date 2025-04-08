@@ -31,5 +31,10 @@ func GetCommands() map[string]commands.Command {
 			Description: "Rename the specified pokemon to the new given name",
 			Callback:    commandRename,
 		},
+		"release": {
+			Name:        "release",
+			Description: "Release the pokemon from your pokebox back into wild",
+			Callback:    commandRelease,
+		},
 	}
 }
