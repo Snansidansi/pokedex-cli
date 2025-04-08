@@ -1,4 +1,4 @@
-package cmdteam
+package basecommands
 
 import (
 	"errors"
@@ -7,7 +7,7 @@ import (
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
-func commandList(conf *pokeapi.Config, _ ...string) error {
+func CommandListTeam(conf *pokeapi.Config, _ ...string) error {
 	pokemonInTeam := conf.PlayerData.Team.Pokemon
 
 	if len(pokemonInTeam) == 0 {

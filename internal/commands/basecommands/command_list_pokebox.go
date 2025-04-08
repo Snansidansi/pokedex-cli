@@ -1,4 +1,4 @@
-package cmdpokebox
+package basecommands
 
 import (
 	"errors"
@@ -7,7 +7,7 @@ import (
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
-func commandList(conf *pokeapi.Config, _ ...string) error {
+func CommandListPokebox(conf *pokeapi.Config, _ ...string) error {
 	pokebox := conf.PlayerData.Pokebox
 
 	if len(pokebox) == 0 {

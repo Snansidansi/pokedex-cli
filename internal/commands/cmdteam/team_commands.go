@@ -25,7 +25,7 @@ func GetCommands() map[string]commands.Command {
 		"list": {
 			Name:        "list",
 			Description: "List all pokemon in your team",
-			Callback:    commandList,
+			Callback:    basecommands.CommandListTeam,
 		},
 	}
 }
