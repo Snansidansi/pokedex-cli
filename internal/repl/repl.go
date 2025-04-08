@@ -2,6 +2,7 @@ package repl
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -30,9 +31,15 @@ func StartRepl(promptMessage string, config *pokeapi.Config, commands map[string
 		}
 
 		if cmd, ok := commands[commandName]; ok {
-			if err := cmd.Callback(config, commandArgs...); err != nil {
+			err := cmd.Callback(config, commandArgs...)
+			if errors.Is(err, ExitReplError{}) {
+				return
+			}
+
+			if err != nil {
 				fmt.Println(err)
 			}
+
 			fmt.Println("")
 			continue
 		}
