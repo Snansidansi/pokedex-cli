@@ -51,8 +51,13 @@ func GetCommands() map[string]commands.Command {
 		},
 		"pokebox": {
 			Name:        "pokebox",
-			Description: "Enter the pokebox and list available operations",
+			Description: "Enter the pokebox mode. Type help in this mode for more information",
 			Callback:    commandPokebox,
+		},
+		"team": {
+			Name:        "team",
+			Description: "Enter the team mode. Type help in this mode for more information",
+			Callback:    commandTeam,
 		},
 	}
 }
