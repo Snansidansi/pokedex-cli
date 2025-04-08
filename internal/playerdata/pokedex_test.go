@@ -10,19 +10,19 @@ func TestNewPokedex(t *testing.T) {
 	cases := []struct {
 		name            string
 		keysToAdd       []string
-		expectedPokedex *Pokedex
+		expectedPokedex Pokedex
 	}{
 		{
 			name:      "Create empty pokedex",
 			keysToAdd: []string{},
-			expectedPokedex: &Pokedex{
+			expectedPokedex: Pokedex{
 				Data: map[string]struct{}{},
 			},
 		},
 		{
 			name:      "Create pokedex with one init value",
 			keysToAdd: []string{"pikachu"},
-			expectedPokedex: &Pokedex{
+			expectedPokedex: Pokedex{
 				Data: map[string]struct{}{
 					"pikachu": {},
 				},
@@ -31,7 +31,7 @@ func TestNewPokedex(t *testing.T) {
 		{
 			name:      "Create pokedex with two init values",
 			keysToAdd: []string{"charmander", "squirtle"},
-			expectedPokedex: &Pokedex{
+			expectedPokedex: Pokedex{
 				Data: map[string]struct{}{
 					"charmander": {},
 					"squirtle":   {},
@@ -41,7 +41,7 @@ func TestNewPokedex(t *testing.T) {
 		{
 			name:      "Create pokedex with duplicate init values",
 			keysToAdd: []string{"charmander", "charmander"},
-			expectedPokedex: &Pokedex{
+			expectedPokedex: Pokedex{
 				Data: map[string]struct{}{
 					"charmander": {},
 				},
@@ -63,9 +63,9 @@ func TestNewPokedex(t *testing.T) {
 func TestPokedex_Add(t *testing.T) {
 	cases := []struct {
 		name            string
-		initialPokedex  *Pokedex
+		initialPokedex  Pokedex
 		keyToAdd        string
-		expectedPokedex *Pokedex
+		expectedPokedex Pokedex
 	}{
 		{
 			name:            "Add new entry to empty pokedex",
@@ -114,7 +114,7 @@ func TestPokedex_Add(t *testing.T) {
 func TestContains(t *testing.T) {
 	cases := []struct {
 		name       string
-		pokedex    *Pokedex
+		pokedex    Pokedex
 		checkValue string
 		expected   bool
 	}{
@@ -153,7 +153,7 @@ func TestContains(t *testing.T) {
 func TestGetAll(t *testing.T) {
 	cases := []struct {
 		name     string
-		pokedex  *Pokedex
+		pokedex  Pokedex
 		expected []string
 	}{
 		{
@@ -188,7 +188,7 @@ func TestGetAll(t *testing.T) {
 func TestIsEmpty(t *testing.T) {
 	cases := []struct {
 		name     string
-		pokedex  *Pokedex
+		pokedex  Pokedex
 		expected bool
 	}{
 		{

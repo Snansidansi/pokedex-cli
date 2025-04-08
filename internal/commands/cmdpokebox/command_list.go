@@ -9,7 +9,7 @@ import (
 func commandList(conf *pokeapi.Config, _ ...string) error {
 	pokebox := conf.PlayerData.Pokebox
 
-	if len(*pokebox) == 0 {
+	if len(pokebox) == 0 {
 		fmt.Println("Your pokebox is empty")
 		return nil
 	}

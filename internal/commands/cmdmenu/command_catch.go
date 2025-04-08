@@ -40,8 +40,8 @@ func commandCatch(conf *pokeapi.Config, args ...string) error {
 	conf.PlayerData.Pokedex.Add(pokemonDTO.Name)
 	fmt.Printf("%s was caught!\n", pokemonDTO.Name)
 
-	pokemonName := choosePokemonName(*conf.PlayerData.Pokebox, pokemonDTO.Name)
-	(*conf.PlayerData.Pokebox)[pokemonName] = mapper.PokemonDTOToEntity(&pokemonDTO)
+	pokemonName := choosePokemonName(conf.PlayerData.Pokebox, pokemonDTO.Name)
+	conf.PlayerData.Pokebox[pokemonName] = mapper.PokemonDTOToEntity(&pokemonDTO)
 
 	return nil
 }

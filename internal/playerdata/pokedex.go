@@ -6,8 +6,8 @@ type Pokedex struct {
 	Data map[string]struct{} `json:"data"`
 }
 
-func NewPokedex(initData ...string) *Pokedex {
-	pokedex := &Pokedex{
+func NewPokedex(initData ...string) Pokedex {
+	pokedex := Pokedex{
 		Data: map[string]struct{}{},
 	}
 
@@ -18,16 +18,16 @@ func NewPokedex(initData ...string) *Pokedex {
 	return pokedex
 }
 
-func (p *Pokedex) Add(name string) {
+func (p Pokedex) Add(name string) {
 	p.Data[name] = struct{}{}
 }
 
-func (p *Pokedex) Contains(name string) bool {
+func (p Pokedex) Contains(name string) bool {
 	_, ok := p.Data[name]
 	return ok
 }
 
-func (p *Pokedex) GetAll() []string {
+func (p Pokedex) GetAll() []string {
 	pokemonNames := make([]string, len(p.Data))
 	i := 0
 	for name := range p.Data {
@@ -40,6 +40,6 @@ func (p *Pokedex) GetAll() []string {
 	return pokemonNames
 }
 
-func (p *Pokedex) IsEmpty() bool {
+func (p Pokedex) IsEmpty() bool {
 	return len(p.Data) == 0
 }

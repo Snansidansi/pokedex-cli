@@ -13,7 +13,7 @@ func commandInspect(conf *pokeapi.Config, args ...string) error {
 	}
 
 	pokemonName := args[0]
-	pokemon, ok := (*conf.PlayerData.Pokebox)[pokemonName]
+	pokemon, ok := conf.PlayerData.Pokebox[pokemonName]
 	if !ok {
 		return errors.New("No pokemon with that name exists in your pokebox")
 	}

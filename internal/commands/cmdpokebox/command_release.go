@@ -15,7 +15,7 @@ func commandRelease(conf *pokeapi.Config, args ...string) error {
 	}
 
 	pokemonName := args[0]
-	pokebox := *conf.PlayerData.Pokebox
+	pokebox := conf.PlayerData.Pokebox
 	if _, ok := pokebox[pokemonName]; !ok {
 		return errors.New("pokemon with this name does not exist in your pokebox")
 	}

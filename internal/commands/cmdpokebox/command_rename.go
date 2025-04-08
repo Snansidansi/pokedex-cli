@@ -16,7 +16,7 @@ func commandRename(conf *pokeapi.Config, args ...string) error {
 	if oldName == newName {
 		return nil
 	}
-	pokebox := *conf.PlayerData.Pokebox
+	pokebox := conf.PlayerData.Pokebox
 
 	pokemon := pokebox[oldName]
 	delete(pokebox, oldName)
