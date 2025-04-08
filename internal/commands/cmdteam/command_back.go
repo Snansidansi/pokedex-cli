@@ -1,4 +1,4 @@
-package cmdpokebox
+package cmdteam
 
 import (
 	"fmt"
@@ -8,6 +8,6 @@ import (
 )
 
 func commandBack(_ *pokeapi.Config, _ ...string) error {
-	fmt.Println("Leaving the pokebox mode")
+	fmt.Println("Leaving the team mode")
 	return repl.ExitReplError{}
 }

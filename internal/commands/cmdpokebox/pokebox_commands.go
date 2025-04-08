@@ -19,7 +19,7 @@ func GetCommands() map[string]commands.Command {
 		},
 		"back": {
 			Name:        "back",
-			Description: "Exit the pokebox",
+			Description: "Exit the pokebox mode",
 			Callback:    commandBack,
 		},
 		"inspect": {

@@ -1,6 +1,7 @@
 package cmdpokebox
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
@@ -10,8 +11,7 @@ func commandList(conf *pokeapi.Config, _ ...string) error {
 	pokebox := conf.PlayerData.Pokebox
 
 	if len(pokebox) == 0 {
-		fmt.Println("Your pokebox is empty")
-		return nil
+		return errors.New("Your pokebox is empty")
 	}
 
 	fmt.Println("Pokemon in your pokebox:")
