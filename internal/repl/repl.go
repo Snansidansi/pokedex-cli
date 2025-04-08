@@ -50,7 +50,6 @@ func StartRepl(promptMessage string, config *pokeapi.Config, commands map[string
 }
 
 func cleanInput(text string) []string {
-	text = strings.ToLower(text)
 	words := strings.Fields(text)
 	return words
 }
