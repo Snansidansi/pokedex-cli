@@ -104,7 +104,7 @@ func TestPokedex_Add(t *testing.T) {
 			c.initialPokedex.Add(c.keyToAdd)
 
 			if diff := cmp.Diff(c.expectedPokedex, c.initialPokedex); diff != "" {
-				t.Errorf("%s:\nAdd() mismatch (-want +got):\n%s", c.name, diff)
+				t.Errorf("Add() mismatch (-want +got):\n%s", diff)
 				return
 			}
 		})
