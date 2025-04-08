@@ -27,9 +27,15 @@ func BaseCommandRename(conf *pokeapi.Config, args ...string) error {
 		return errors.New("pokemon with the new name already exists in the team")
 	}
 
-	pokemon := pokebox[oldName]
-	delete(pokebox, oldName)
-	pokebox[newName] = pokemon
+	if pokemon, ok := pokebox[oldName]; ok {
+		delete(pokebox, oldName)
+		pokebox[newName] = pokemon
+	} else if pokemon, ok := team.Pokemon[oldName]; ok {
+		delete(team.Pokemon, oldName)
+		team.Pokemon[newName] = pokemon
+	} else {
+		return errors.New("you do not have a pokemon with the specified name")
+	}
 
 	fmt.Printf("%s was successfuly renamed to %s\n", oldName, newName)
 	return nil
