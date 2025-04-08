@@ -37,5 +37,10 @@ func GetCommands() map[string]commands.Command {
 			Description: "Release the pokemon from your pokebox back into wild",
 			Callback:    commandRelease,
 		},
+		"list-team": {
+			Name:        "list-team",
+			Description: "List all pokemon from your team",
+			Callback:    basecommands.CommandListTeam,
+		},
 	}
 }
