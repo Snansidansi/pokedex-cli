@@ -21,6 +21,7 @@ func commandAdd(conf *pokeapi.Config, args ...string) error {
 
 	pokebox := conf.PlayerData.Pokebox
 	notExisting := []string{}
+	added := []string{}
 	for _, name := range args {
 		pokemon, ok := pokebox[name]
 		if !ok {
@@ -30,6 +31,18 @@ func commandAdd(conf *pokeapi.Config, args ...string) error {
 
 		delete(pokebox, name)
 		team.Add(name, pokemon)
+		added = append(added, name)
+	}
+
+	if len(added) != 0 {
+		fmt.Println("These pokemon were added to your team:")
+		for _, name := range added {
+			fmt.Printf(" - %s\n", name)
+		}
+
+		if len(notExisting) != 0 {
+			fmt.Println("")
+		}
 	}
 
 	if len(notExisting) != 0 {

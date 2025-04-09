@@ -15,6 +15,7 @@ func commandRemove(conf *pokeapi.Config, args ...string) error {
 	team := conf.PlayerData.Team
 	pokebox := conf.PlayerData.Pokebox
 	notExisting := []string{}
+	removed := []string{}
 	for _, name := range args {
 		pokemon, ok := team.Get(name)
 		if !ok {
@@ -24,6 +25,18 @@ func commandRemove(conf *pokeapi.Config, args ...string) error {
 
 		team.Delete(name)
 		pokebox[name] = pokemon
+		removed = append(removed, name)
+	}
+
+	if len(removed) != 0 {
+		fmt.Println("These pokemon were removed from your team:")
+		for _, name := range removed {
+			fmt.Printf(" - %s\n", name)
+		}
+
+		if len(notExisting) != 0 {
+			fmt.Println("")
+		}
 	}
 
 	if len(notExisting) != 0 {

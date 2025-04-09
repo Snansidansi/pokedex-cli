@@ -14,6 +14,7 @@ func CommandListTeam(conf *pokeapi.Config, _ ...string) error {
 		return errors.New("Your team is empty")
 	}
 
+	fmt.Printf("%v of %v pokemon are in your team\n", team.Size(), team.MaxSize)
 	fmt.Println("Pokemon in your team:")
 	for _, name := range pokemonNamesSorted {
 		fmt.Printf(" - %s\n", name)
