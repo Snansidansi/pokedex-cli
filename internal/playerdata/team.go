@@ -32,7 +32,9 @@ func NewTeam(maxSize uint, passiveXPGain uint, passiveXPIntervall time.Duration)
 
 func (team Team) Add(pokemonName string, pokemon entities.Pokemon) error {
 	if len(team.Pokemon) >= int(team.MaxSize) {
-		return fmt.Errorf("team is full (max size: %v)\n", team.MaxSize)
+		return TeamIsFullError{
+			Message: fmt.Sprintf("team is full (max size: %v)\n", team.MaxSize),
+		}
 	}
 
 	if _, ok := team.Pokemon[pokemonName]; ok {
