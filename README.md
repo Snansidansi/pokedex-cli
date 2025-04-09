@@ -13,3 +13,6 @@ Basic cli pokedex repl written in go that uses the online pokeapi.
 - add pokemon from your pokebox to your team and level them over time or in fights
 - playerdata (pokedex, pokebox, ...) are saved to a file when exiting with the `exit` command
 - All requests to the pokeapi get cached some time to reduce traffic
+
+## External Modules
+- https://github.com/qeesung/image2ascii
