@@ -8,14 +8,14 @@ import (
 )
 
 func CommandListTeam(conf *pokeapi.Config, _ ...string) error {
-	pokemonInTeam := conf.PlayerData.Team.Pokemon
-
-	if len(pokemonInTeam) == 0 {
+	team := conf.PlayerData.Team
+	pokemonNamesSorted := team.GetAllNamesSorted()
+	if len(pokemonNamesSorted) == 0 {
 		return errors.New("Your team is empty")
 	}
 
 	fmt.Println("Pokemon in your team:")
-	for name := range pokemonInTeam {
+	for _, name := range pokemonNamesSorted {
 		fmt.Printf(" - %s\n", name)
 	}
 

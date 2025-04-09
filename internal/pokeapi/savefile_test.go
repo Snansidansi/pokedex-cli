@@ -1,9 +1,10 @@
 package pokeapi
 
 import (
-	"reflect"
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 )
 
@@ -38,10 +39,12 @@ func TestSaveAndLoadData(t *testing.T) {
 		return
 	}
 
-	if !reflect.DeepEqual(inputConfig.PlayerData, outputConfig.PlayerData) {
-		t.Error("saved data and loaded data are unequal")
-		t.Errorf("saved data: %v", inputConfig.PlayerData)
-		t.Errorf("loaded data: %v", outputConfig.PlayerData)
+	if diff := cmp.Diff(
+		inputConfig.PlayerData,
+		outputConfig.PlayerData,
+		cmpopts.IgnoreFields(playerdata.Team{}, "Mu"),
+	); diff != "" {
+		t.Errorf("saved and loaded data are unequal (-want +got):\n%s", diff)
 		return
 	}
 }

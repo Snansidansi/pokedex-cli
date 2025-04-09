@@ -16,10 +16,12 @@ type SaveFile struct {
 }
 
 func (c *Config) Save() error {
+	c.PlayerData.Team.Mu.Lock()
 	jsonData, err := json.Marshal(c.PlayerData)
 	if err != nil {
 		return err
 	}
+	c.PlayerData.Team.Mu.Unlock()
 
 	tempFilePath := c.SaveFile.Dir + "/.tmp-savefile.json"
 	if err := os.WriteFile(tempFilePath, jsonData, 0644); err != nil {
@@ -45,7 +47,7 @@ func (c *Config) Load() error {
 		return err
 	}
 
-	loadedData := playerdata.PlayerData{}
+	loadedData := playerdata.NewPlayerData()
 	if err := json.Unmarshal(data, &loadedData); err != nil {
 		return err
 	}
