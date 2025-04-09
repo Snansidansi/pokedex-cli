@@ -1,6 +1,9 @@
 package entities
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type Pokemon struct {
 	ID                int    `json:"id"`
@@ -42,6 +45,8 @@ type Pokemon struct {
 func (pokemon Pokemon) Print() {
 	fmt.Printf("Name: %s\n", pokemon.Name)
 	fmt.Printf("Current xp: %v\n", pokemon.CurrentExperience)
+	fmt.Printf("Current level: %v\n", pokemon.GetLevel())
+	fmt.Printf(" -> xp to next level (%v): %v\n", pokemon.GetLevel()+1, pokemon.GetXPForNextLevel())
 	fmt.Printf("Height: %v\n", pokemon.Height)
 	fmt.Printf("Weight: %v\n", pokemon.Weight)
 
@@ -65,4 +70,21 @@ func (pokemon Pokemon) Print() {
 	for i := range pokemon.Types {
 		fmt.Printf(" - %s\n", pokemon.Types[i].Type.Name)
 	}
+}
+
+const neededXPTuningFactor = 0.4
+
+func (pokemon Pokemon) GetLevel() int {
+	level := neededXPTuningFactor * math.Sqrt(float64(pokemon.CurrentExperience))
+	return int(math.Round(level))
+}
+
+func (pokemon Pokemon) GetXPForNextLevel() int {
+	currentLevel := pokemon.GetLevel()
+	nextLevel := currentLevel + 1
+
+	totalXpForNextLevel := math.Pow(float64(nextLevel)/neededXPTuningFactor, 2)
+
+	neededXp := int(math.Ceil(totalXpForNextLevel)) - pokemon.CurrentExperience
+	return neededXp
 }
