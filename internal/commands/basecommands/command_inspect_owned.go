@@ -23,6 +23,14 @@ func CommandInspectOwned(conf *pokeapi.Config, args ...string) error {
 	fmt.Printf("Details about %s:\n\n", pokemonName)
 	pokemon.Print()
 
+	asciiImage, err := conf.Client.GetAsciiImage(pokemon.ImageUrl)
+	if err != nil {
+		fmt.Println("image could not be displayed:")
+		return err
+	}
+	fmt.Println("")
+	fmt.Print(asciiImage)
+
 	return nil
 }
 
