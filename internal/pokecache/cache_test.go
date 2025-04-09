@@ -45,10 +45,12 @@ func TestAddGet(t *testing.T) {
 }
 
 func TestReapLoop(t *testing.T) {
-	const maxCacheAge = 4 * time.Millisecond
-	const checkInterval = 2 * time.Millisecond
-	const sleepTime = 10 * time.Millisecond
-	const key = "www.test.com"
+	const (
+		maxCacheAge   = 4 * time.Millisecond
+		checkInterval = 2 * time.Millisecond
+		sleepTime     = 10 * time.Millisecond
+		key           = "www.test.com"
+	)
 
 	cache := NewCache(checkInterval, maxCacheAge)
 	cache.Add(key, []byte("test"))

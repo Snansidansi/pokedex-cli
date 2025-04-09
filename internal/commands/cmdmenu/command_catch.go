@@ -67,11 +67,13 @@ func choosePokemonName(pokebox playerdata.Pokebox, pokemonName string) string {
 	scanner.Scan()
 	inputName := scanner.Text()
 
-	fmt.Println("")
-
 	if inputName == "" {
-		return pokebox.GetNextAvailableName(pokemonName)
+		defaultName := pokebox.GetNextAvailableName(pokemonName)
+		fmt.Printf("%s was added to the pokebox\n", defaultName)
+		return defaultName
 	}
+
+	fmt.Printf("%s was added to the pokebox\n", inputName)
 	return pokebox.GetNextAvailableName(inputName)
 }
 
