@@ -121,3 +121,9 @@ func (team Team) Delete(pokemonName string) {
 	delete(team.Pokemon, pokemonName)
 	team.Mu.Unlock()
 }
+
+func (team Team) Size() int {
+	team.Mu.Lock()
+	defer team.Mu.Unlock()
+	return len(team.Pokemon)
+}
