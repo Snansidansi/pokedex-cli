@@ -40,6 +40,7 @@ type Pokemon struct {
 			URL  string `json:"url"`
 		} `json:"type"`
 	} `json:"types"`
+	ImageUrl string `json:"official-artwork"`
 }
 
 func (pokemon Pokemon) Print() {

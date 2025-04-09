@@ -41,6 +41,13 @@ type PokemonDTO struct {
 			URL  string `json:"url"`
 		} `json:"type"`
 	} `json:"types"`
+	Sprites struct {
+		Other struct {
+			OfficialArtwork struct {
+				FrontDefault string `json:"front_default"`
+			} `json:"official-artwork"`
+		} `json:"other"`
+	} `json:"sprites"`
 }
 
 func (p *PokemonDTO) Catch(pokeball entities.PokeBall) (success bool) {

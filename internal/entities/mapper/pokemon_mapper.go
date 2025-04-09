@@ -18,5 +18,6 @@ func PokemonDTOToEntity(pokemonDTO *pokeapi.PokemonDTO) entities.Pokemon {
 		Stats:             pokemonDTO.Stats,
 		Forms:             pokemonDTO.Forms,
 		Types:             pokemonDTO.Types,
+		ImageUrl:          pokemonDTO.Sprites.Other.OfficialArtwork.FrontDefault,
 	}
 }
