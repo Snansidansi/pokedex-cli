@@ -32,5 +32,15 @@ func GetCommands() map[string]commands.Command {
 			Description: "List all your pokemon in the pokebox to add them to your team",
 			Callback:    basecommands.CommandListPokebox,
 		},
+		"add": {
+			Name:        "add",
+			Description: "Move a pokemon from your pokebox to you team",
+			Callback:    commandAdd,
+		},
+		"remove": {
+			Name:        "remove",
+			Description: "Move a pokemon from the team back to the pokebox",
+			Callback:    commandRemove,
+		},
 	}
 }
