@@ -48,11 +48,12 @@ func (c *Config) Load() error {
 	}
 
 	loadedData := playerdata.NewPlayerData()
+	loadedData.Team.Mu.Lock()
 	if err := json.Unmarshal(data, &loadedData); err != nil {
 		return err
 	}
-
 	c.PlayerData = loadedData
+	loadedData.Team.Mu.Unlock()
 
 	return nil
 }
