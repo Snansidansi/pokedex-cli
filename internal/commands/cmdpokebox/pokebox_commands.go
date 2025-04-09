@@ -24,7 +24,7 @@ func GetCommands() map[string]commands.Command {
 		},
 		"inspect": {
 			Name:        "inspect",
-			Description: "Inspect the specified pokemon from your pokebox",
+			Description: "Inspect the specified pokemon from your pokebox or team",
 			Callback:    basecommands.CommandInspectOwned,
 		},
 		"rename": {

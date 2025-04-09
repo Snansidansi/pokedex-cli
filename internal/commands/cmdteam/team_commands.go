@@ -42,5 +42,10 @@ func GetCommands() map[string]commands.Command {
 			Description: "Move a pokemon from the team back to the pokebox",
 			Callback:    commandRemove,
 		},
+		"inspect": {
+			Name:        "inspect",
+			Description: "Inspect the specified pokemon from your pokebox or team",
+			Callback:    basecommands.CommandInspectOwned,
+		},
 	}
 }
