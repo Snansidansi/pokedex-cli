@@ -56,7 +56,7 @@ func TestPokebox_GetDefaultName(t *testing.T) {
 
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
-			actual := c.pokebox.GetNextAvailableName(c.pokemonName)
+			actual := c.pokebox.GetNextAvailableName(c.pokemonName, NewTeam(0, 0, 0))
 			if actual != c.expected {
 				t.Errorf("GetDefaultName() = %v, want %v", actual, c.expected)
 				return

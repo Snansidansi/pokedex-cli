@@ -9,8 +9,10 @@ import (
 
 type Pokebox map[string]entities.Pokemon
 
-func (p Pokebox) GetNextAvailableName(pokemonName string) string {
-	if _, ok := p[pokemonName]; !ok {
+func (p Pokebox) GetNextAvailableName(pokemonName string, team Team) string {
+	_, existsInPokebox := p[pokemonName]
+	_, existsInTeam := team.Get(pokemonName)
+	if !existsInPokebox && !existsInTeam {
 		return pokemonName
 	}
 

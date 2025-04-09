@@ -11,7 +11,6 @@ import (
 
 	"github.com/snansidansi/pokedex-cli/internal/entities"
 	"github.com/snansidansi/pokedex-cli/internal/entities/mapper"
-	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
@@ -40,8 +39,9 @@ func commandCatch(conf *pokeapi.Config, args ...string) error {
 	conf.PlayerData.Pokedex.Add(pokemonDTO.Name)
 	fmt.Printf("%s was caught!\n", pokemonDTO.Name)
 
-	pokemonName := choosePokemonName(conf.PlayerData.Pokebox, pokemonDTO.Name)
+	pokemonName := choosePokemonName(conf, pokemonDTO.Name)
 	conf.PlayerData.Pokebox[pokemonName] = mapper.PokemonDTOToEntity(&pokemonDTO)
+	fmt.Printf("%s was added to the pokebox\n", pokemonName)
 
 	return nil
 }
@@ -58,23 +58,24 @@ func printCatchProcess(pokemonName string, catchChance int) {
 	fmt.Print(" ")
 }
 
-func choosePokemonName(pokebox playerdata.Pokebox, pokemonName string) string {
+func choosePokemonName(conf *pokeapi.Config, defaultPokemonName string) string {
 	fmt.Println("")
 	fmt.Println("Name your Pokemon (type nothing for the default name):")
 	fmt.Print("Name > ")
 
 	scanner := bufio.NewScanner(os.Stdin)
+	pokebox := conf.PlayerData.Pokebox
+	team := conf.PlayerData.Team
+
 	scanner.Scan()
 	inputName := scanner.Text()
 
 	if inputName == "" {
-		defaultName := pokebox.GetNextAvailableName(pokemonName)
-		fmt.Printf("%s was added to the pokebox\n", defaultName)
-		return defaultName
+		inputName = defaultPokemonName
 	}
 
-	fmt.Printf("%s was added to the pokebox\n", inputName)
-	return pokebox.GetNextAvailableName(inputName)
+	assignedName := pokebox.GetNextAvailableName(inputName, team)
+	return assignedName
 }
 
 func choosePokeBall(pokemon *pokeapi.PokemonDTO) entities.PokeBall {
