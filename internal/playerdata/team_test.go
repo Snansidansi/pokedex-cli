@@ -102,13 +102,13 @@ func TestExperienceLoop(t *testing.T) {
 	}{
 		{
 			name:               "team with 0 and non 0 values for current pokemon xp",
-			passiveXPGain:      10,
-			passiveXPIntervall: 10 * time.Millisecond,
-			waitDuration:       59 * time.Millisecond,
+			passiveXPGain:      20,
+			passiveXPIntervall: 20 * time.Millisecond,
+			waitDuration:       50 * time.Millisecond,
 			expected: map[string]int{
-				"first":  50,
-				"second": 150,
-				"third":  50,
+				"first":  40,
+				"second": 140,
+				"third":  40,
 			},
 		},
 		{
@@ -135,8 +135,8 @@ func TestExperienceLoop(t *testing.T) {
 		},
 		{
 			name:               "new team with 0 for passive xp gain and not 0 for intervall",
-			passiveXPGain:      5,
-			passiveXPIntervall: 0,
+			passiveXPGain:      0,
+			passiveXPIntervall: 5,
 			waitDuration:       20,
 			expected: map[string]int{
 				"first":  0,
