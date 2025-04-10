@@ -6,6 +6,7 @@ type Config struct {
 	Client          Client
 	NextLocationURL *string
 	PrevLocationURL *string
+	CurrentLocation int
 	PlayerData      playerdata.PlayerData
 	SaveFile        SaveFile
 }

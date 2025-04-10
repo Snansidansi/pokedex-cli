@@ -61,7 +61,7 @@ func GetCommands() map[string]commands.Command {
 		},
 		"explore": {
 			Name:        "explore",
-			Description: "Start exploring",
+			Description: "Start exploring the specified area",
 			Callback:    commandExplore,
 		},
 	}

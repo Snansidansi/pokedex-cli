@@ -10,6 +10,7 @@ type Locations struct {
 }
 
 type Location struct {
+	ID         int    `json:"id"`
 	Name       string `json:"name"`
 	Encounters []struct {
 		Pokemon struct {
