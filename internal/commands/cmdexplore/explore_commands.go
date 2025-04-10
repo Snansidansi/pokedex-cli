@@ -9,10 +9,10 @@ func GetCommands() map[string]commands.Command {
 			Description: "List available commands",
 			Callback:    commandHelp,
 		},
-		"back": {
-			Name:        "back",
+		"stop": {
+			Name:        "stop",
 			Description: "Stop the exploration",
-			Callback:    commandBack,
+			Callback:    commandStop,
 		},
 	}
 }
