@@ -2,6 +2,7 @@ package cmdmenu
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/snansidansi/pokedex-cli/internal/commands/cmdexplore"
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
@@ -13,13 +14,14 @@ func commandExplore(conf *pokeapi.Config, args ...string) error {
 		return errors.New("expecting location name or id")
 	}
 
-	locationName := args[0]
-	location, err := conf.Client.GetLocation(locationName)
+	locationNameOrID := args[0]
+	location, err := conf.Client.GetLocation(locationNameOrID)
 	if err != nil {
 		return errors.New("location does not exist")
 	}
-	conf.CurrentLocation = location.ID
+	conf.CurrentLocationID = location.ID
 
+	fmt.Printf("You are now in: %s\n", location.Name)
 	repl.StartRepl("exploring > ", conf, cmdexplore.GetCommands())
 	return nil
 }
