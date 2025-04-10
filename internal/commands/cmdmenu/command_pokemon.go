@@ -13,7 +13,7 @@ func commandPokemon(conf *pokeapi.Config, args ...string) error {
 	}
 
 	locationNameOrID := args[0]
-	location, err := conf.Client.GetPokemonInLocation(locationNameOrID)
+	location, err := conf.Client.GetLocation(locationNameOrID)
 	if err != nil {
 		return err
 	}

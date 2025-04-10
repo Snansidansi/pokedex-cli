@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func (c *Client) GetPokemonInLocation(locationNameOrID string) (Location, error) {
+func (c *Client) GetLocation(locationNameOrID string) (Location, error) {
 	url := baseURL + "/location-area/" + locationNameOrID
 
 	data, ok := c.cache.Get(url)
