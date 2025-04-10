@@ -1,4 +1,4 @@
-package cmdmenu
+package basecommands
 
 import (
 	"bufio"
@@ -14,7 +14,7 @@ import (
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
-func commandCatch(conf *pokeapi.Config, args ...string) error {
+func CommandCatch(conf *pokeapi.Config, args ...string) error {
 	if len(args) < 1 {
 		return errors.New("expecting pokemon name")
 	}
