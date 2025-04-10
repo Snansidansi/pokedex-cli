@@ -5,6 +5,13 @@ import (
 	"math"
 )
 
+type Stats struct {
+	MaxHP     int
+	CurrentHP int
+	Damage    int
+	Speed     int
+}
+
 type Pokemon struct {
 	ID                int    `json:"id"`
 	Name              string `json:"name"`
@@ -25,15 +32,9 @@ type Pokemon struct {
 		Name string `json:"name"`
 		URL  string `json:"url"`
 	} `json:"forms"`
-	Stats []struct {
-		BaseStat int `json:"base_stat"`
-		Effort   int `json:"effort"`
-		Stat     struct {
-			Name string `json:"name"`
-			URL  string `json:"url"`
-		} `json:"stat"`
-	} `json:"stats"`
-	Types []struct {
+	Stats     Stats `json:"stats"`
+	BaseStats Stats `json:"base_stats"`
+	Types     []struct {
 		Slot int `json:"slot"`
 		Type struct {
 			Name string `json:"name"`
@@ -62,10 +63,10 @@ func (pokemon Pokemon) Print() {
 	}
 
 	fmt.Println("Stats:")
-	for i := range pokemon.Stats {
-		stat := pokemon.Stats[i]
-		fmt.Printf(" - %s: %v\n", stat.Stat.Name, stat.BaseStat)
-	}
+	fmt.Printf(" - Max hp: %v\n", pokemon.Stats.MaxHP)
+	fmt.Printf(" - Current hp: %v\n", pokemon.Stats.CurrentHP)
+	fmt.Printf(" - Damage: %v\n", pokemon.Stats.Damage)
+	fmt.Printf(" - Speed: %v\n", pokemon.Stats.Speed)
 
 	fmt.Println("Types:")
 	for i := range pokemon.Types {
