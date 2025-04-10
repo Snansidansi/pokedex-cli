@@ -24,10 +24,10 @@ func GetCommands() map[string]commands.Command {
 			Description: "List the previous 20 locations",
 			Callback:    commandMapb,
 		},
-		"explore": {
-			Name:        "explore",
-			Description: "Explore the specified location",
-			Callback:    commandExplore,
+		"pokemon": {
+			Name:        "pokemon",
+			Description: "List pokemon in the specified location",
+			Callback:    commandPokemon,
 		},
 		"catch": {
 			Name:        "catch",
@@ -58,6 +58,11 @@ func GetCommands() map[string]commands.Command {
 			Name:        "team",
 			Description: "Enter the team mode. Type help in this mode for more information",
 			Callback:    commandTeam,
+		},
+		"explore": {
+			Name:        "explore",
+			Description: "Start exploring",
+			Callback:    commandExplore,
 		},
 	}
 }
