@@ -56,6 +56,7 @@ func (team Team) experienceLoop(intervall time.Duration, xpGain uint) {
 		team.Mu.Lock()
 		for name, pokemon := range team.Pokemon {
 			pokemon.CurrentExperience += int(xpGain)
+			pokemon.RecalculateStats()
 			team.Pokemon[name] = pokemon
 		}
 		team.Mu.Unlock()

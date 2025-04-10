@@ -74,10 +74,10 @@ func (pokemon Pokemon) Print() {
 	}
 }
 
-const neededXPTuningFactor = 0.4
+const XPForLevelTuningFactor = 0.4
 
 func (pokemon Pokemon) GetLevel() int {
-	level := neededXPTuningFactor * math.Sqrt(float64(pokemon.CurrentExperience))
+	level := XPForLevelTuningFactor * math.Sqrt(float64(pokemon.CurrentExperience))
 	return int(math.Round(level))
 }
 
@@ -85,8 +85,20 @@ func (pokemon Pokemon) GetXPForNextLevel() int {
 	currentLevel := pokemon.GetLevel()
 	nextLevel := currentLevel + 1
 
-	totalXpForNextLevel := math.Pow(float64(nextLevel)/neededXPTuningFactor, 2)
+	totalXpForNextLevel := math.Pow(float64(nextLevel)/XPForLevelTuningFactor, 2)
 
 	neededXp := int(math.Ceil(totalXpForNextLevel)) - pokemon.CurrentExperience
 	return neededXp
+}
+
+func (pokemon *Pokemon) RecalculateStats() {
+	currentLevel := pokemon.GetLevel()
+	isFullLive := pokemon.Stats.MaxHP == pokemon.Stats.CurrentHP
+
+	pokemon.Stats.MaxHP = pokemon.BaseStats.MaxHP + int(math.Pow(float64(currentLevel), 1.5))
+	if isFullLive {
+		pokemon.Stats.CurrentHP = pokemon.Stats.MaxHP
+	}
+
+	pokemon.Stats.Damage = pokemon.BaseStats.Damage + int(math.Pow(float64(currentLevel), 1.7))
 }
