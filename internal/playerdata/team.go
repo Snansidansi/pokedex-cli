@@ -12,11 +12,12 @@ import (
 )
 
 type Team struct {
-	Pokemon      map[string]entities.Pokemon `json:"pokemon"`
-	Mu           *sync.Mutex                 `json:"-"`
-	MaxSize      uint                        `json:"max_size"`
-	CurrentEnemy *entities.Pokemon           `json:"-"`
-	WonFight     bool                        `json:"-"`
+	Pokemon       map[string]entities.Pokemon `json:"pokemon"`
+	Mu            *sync.Mutex                 `json:"-"`
+	MaxSize       uint                        `json:"max_size"`
+	CurrentEnemy  *entities.Pokemon           `json:"-"`
+	WonFight      bool                        `json:"-"`
+	ActivePokemon *string                     `json:"-"`
 }
 
 func NewTeam(maxSize uint, passiveXPGain uint, passiveXPIntervall time.Duration) Team {
@@ -191,4 +192,9 @@ func (team Team) GetAverageLevel() int {
 	avgLevel = int(math.Round(float64(avgLevel) / float64(len(team.Pokemon))))
 
 	return avgLevel
+}
+
+func (team *Team) AfterFightCleanup() {
+	team.CurrentEnemy = nil
+	team.ActivePokemon = nil
 }

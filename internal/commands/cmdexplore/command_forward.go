@@ -59,7 +59,7 @@ func manageEncounter(pokemonName string, conf *pokeapi.Config) error {
 		case "fight":
 			fmt.Println("")
 			if !conf.PlayerData.Team.HasAliveMembers() {
-				fmt.Println("your team does not have any alive members.\nYou need to heal them first or switch them out")
+				fmt.Println("Your team does not have any alive members.\nYou need to heal them first or switch them out")
 				continue
 			}
 
@@ -79,7 +79,7 @@ func setEnemyLevel(conf *pokeapi.Config, pokemon *entities.Pokemon) {
 
 func fight(conf *pokeapi.Config, pokemon entities.Pokemon) error {
 	conf.PlayerData.Team.CurrentEnemy = &pokemon
-	defer func() { conf.PlayerData.Team.CurrentEnemy = nil }()
+	defer conf.PlayerData.Team.AfterFightCleanup()
 
 	repl.StartRepl("Fight > ", conf, cmdfight.GetCommands())
 
