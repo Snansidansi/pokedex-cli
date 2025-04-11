@@ -10,10 +10,6 @@ import (
 )
 
 func commandExplore(conf *pokeapi.Config, args ...string) error {
-	if !conf.PlayerData.Team.HasAliveMembers() {
-		return errors.New("your team does not have any alive members.\nYou need to heal them first or switch them out")
-	}
-
 	if len(args) != 1 {
 		return errors.New("expecting location name or id")
 	}

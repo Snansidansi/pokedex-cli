@@ -2,7 +2,6 @@ package cmdmenu
 
 import (
 	"github.com/snansidansi/pokedex-cli/internal/commands"
-	"github.com/snansidansi/pokedex-cli/internal/commands/basecommands"
 )
 
 func GetCommands() map[string]commands.Command {
@@ -31,11 +30,6 @@ func GetCommands() map[string]commands.Command {
 			Name:        "pokemon",
 			Description: "List pokemon in the specified location",
 			Callback:    commandPokemon,
-		},
-		"catch": {
-			Name:        "catch",
-			Description: "Try to catch the specified pokemon",
-			Callback:    basecommands.CommandCatch,
 		},
 		"inspect": {
 			Name:        "inspect",

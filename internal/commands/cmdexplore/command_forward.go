@@ -58,6 +58,11 @@ func manageEncounter(pokemonName string, conf *pokeapi.Config) error {
 			return basecommands.CommandCatch(conf, pokemonName)
 		case "fight":
 			fmt.Println("")
+			if !conf.PlayerData.Team.HasAliveMembers() {
+				fmt.Println("your team does not have any alive members.\nYou need to heal them first or switch them out")
+				continue
+			}
+
 			return fight(conf, pokemon)
 		case "flee":
 			fmt.Println("")
