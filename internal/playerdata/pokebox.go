@@ -39,3 +39,18 @@ func (p Pokebox) GetAllNamesSorted() []string {
 
 	return sortedPokemon
 }
+
+func (p Pokebox) GetPokemonHPSorted() []entities.PokemonHP {
+	pokemonsHP := make([]entities.PokemonHP, len(p))
+	i := 0
+	for name, pokemon := range p {
+		pokemonsHP[i] = entities.PokemonHP{
+			Name: name,
+			HP:   pokemon.Stats.CurrentHP,
+		}
+		i++
+	}
+
+	slices.SortFunc(pokemonsHP, entities.SortPokemonHP)
+	return pokemonsHP
+}

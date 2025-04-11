@@ -47,5 +47,10 @@ func GetCommands() map[string]commands.Command {
 			Description: "Inspect the specified pokemon from your pokebox or team",
 			Callback:    basecommands.CommandInspectOwned,
 		},
+		"hp": {
+			Name:        "hp",
+			Description: "List how much hp every pokemon in your team currently has",
+			Callback:    basecommands.CommandTeamHP,
+		},
 	}
 }

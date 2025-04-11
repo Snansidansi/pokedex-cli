@@ -3,6 +3,7 @@ package entities
 import (
 	"fmt"
 	"math"
+	"strings"
 )
 
 type Stats struct {
@@ -10,6 +11,19 @@ type Stats struct {
 	CurrentHP int
 	Damage    int
 	Speed     int
+}
+
+type PokemonHP struct {
+	Name string
+	HP   int
+}
+
+func SortPokemonHP(a, b PokemonHP) int {
+	hpDiff := a.HP - b.HP
+	if hpDiff != 0 {
+		return hpDiff
+	}
+	return strings.Compare(a.Name, b.Name)
 }
 
 type Pokemon struct {

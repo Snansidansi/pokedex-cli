@@ -140,3 +140,21 @@ func (team Team) HasAliveMembers() bool {
 	}
 	return aliveMembers
 }
+
+func (team Team) GetPokemonHPSorted() []entities.PokemonHP {
+	team.Mu.Lock()
+	defer team.Mu.Unlock()
+
+	pokemonsHP := make([]entities.PokemonHP, len(team.Pokemon))
+	i := 0
+	for name, pokemon := range team.Pokemon {
+		pokemonsHP[i] = entities.PokemonHP{
+			Name: name,
+			HP:   pokemon.Stats.CurrentHP,
+		}
+		i++
+	}
+
+	slices.SortFunc(pokemonsHP, entities.SortPokemonHP)
+	return pokemonsHP
+}
