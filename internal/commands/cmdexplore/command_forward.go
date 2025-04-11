@@ -43,6 +43,8 @@ func manageEncounter(pokemonName string, conf *pokeapi.Config) error {
 
 	setEnemyLevel(conf, &pokemon)
 
+	asciiImage, _ := conf.Client.GetAsciiImage(pokemon.ImageUrl, 30)
+	fmt.Print(asciiImage)
 	fmt.Printf("You've encountered a wild %s level %v!\n", pokemonName, pokemon.GetLevel())
 	fmt.Println("Do you want to flee or fight or catch it?")
 
@@ -80,6 +82,12 @@ func setEnemyLevel(conf *pokeapi.Config, pokemon *entities.Pokemon) {
 func fight(conf *pokeapi.Config, pokemon entities.Pokemon) error {
 	conf.PlayerData.Team.CurrentEnemy = &pokemon
 	defer conf.PlayerData.Team.AfterFightCleanup()
+
+	fmt.Println("Enemy stats:")
+	fmt.Printf(" - Name: %s\n", pokemon.Name)
+	fmt.Printf(" - HP: %v\n", pokemon.Stats.MaxHP)
+	fmt.Printf(" - Damage: %v\n", pokemon.Stats.Damage)
+	fmt.Println("")
 
 	repl.StartRepl("Fight > ", conf, cmdfight.GetCommands())
 

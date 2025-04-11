@@ -7,7 +7,7 @@ import (
 	"github.com/qeesung/image2ascii/convert"
 )
 
-func (c *Client) GetAsciiImage(inputURL string) (string, error) {
+func (c *Client) GetAsciiImage(inputURL string, size int) (string, error) {
 	if data, ok := c.cache.Get(inputURL); ok {
 		asciiImage := string(data)
 		return asciiImage, nil
@@ -18,7 +18,7 @@ func (c *Client) GetAsciiImage(inputURL string) (string, error) {
 		return "", err
 	}
 
-	asciiImage := generateAsciiImage(img)
+	asciiImage := generateAsciiImage(img, size)
 	c.cache.Add(inputURL, []byte(asciiImage))
 	return asciiImage, nil
 }
@@ -43,11 +43,14 @@ func (c *Client) getImage(inputURL string) (image.Image, error) {
 	return img, nil
 }
 
-func generateAsciiImage(img image.Image) string {
+func generateAsciiImage(img image.Image, size int) string {
+	if size == 0 {
+		size = 40
+	}
 
 	convertOptions := convert.DefaultOptions
-	convertOptions.FixedWidth = 80
-	convertOptions.FixedHeight = 40
+	convertOptions.FixedWidth = size * 2
+	convertOptions.FixedHeight = size
 
 	converter := convert.NewImageConverter()
 	asciiImage := converter.Image2ASCIIString(img, &convertOptions)
