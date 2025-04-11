@@ -74,6 +74,7 @@ func choosePokemonName(conf *pokeapi.Config, defaultPokemonName string) string {
 		inputName = defaultPokemonName
 	}
 
+	inputName = strings.Join(strings.Fields(inputName), "-")
 	assignedName := pokebox.GetNextAvailableName(inputName, team)
 	return assignedName
 }
