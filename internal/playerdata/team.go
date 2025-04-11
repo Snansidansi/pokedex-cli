@@ -85,19 +85,6 @@ func (team Team) GetAllNamesSorted() []string {
 	return pokemonNames
 }
 
-func (team Team) Update(pokemonName string, newPokemon entities.Pokemon) error {
-	team.Mu.Lock()
-	defer team.Mu.Unlock()
-
-	if _, ok := team.Pokemon[pokemonName]; !ok {
-		return errors.New("pokemon cannot be updated: does not exist")
-	}
-
-	team.Pokemon[pokemonName] = newPokemon
-
-	return nil
-}
-
 func (team Team) Rename(oldName, newName string) error {
 	team.Mu.Lock()
 	defer team.Mu.Unlock()
