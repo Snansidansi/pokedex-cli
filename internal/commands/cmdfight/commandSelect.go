@@ -13,9 +13,13 @@ func commandSelect(conf *pokeapi.Config, args ...string) error {
 	}
 
 	pokemonName := args[0]
-	_, ok := conf.PlayerData.Team.Get(pokemonName)
+	pokemon, ok := conf.PlayerData.Team.Get(pokemonName)
 	if !ok {
 		return errors.New("this pokemon is not in your team")
+	}
+
+	if pokemon.Stats.CurrentHP <= 0 {
+		return errors.New("this pokemon has no hp left")
 	}
 
 	conf.PlayerData.Team.ActivePokemon = &pokemonName
