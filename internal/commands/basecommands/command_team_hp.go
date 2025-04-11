@@ -11,7 +11,7 @@ func CommandTeamHP(conf *pokeapi.Config, _ ...string) error {
 
 	pokemonsHP := conf.PlayerData.Team.GetPokemonHPSorted()
 	for _, pokemon := range pokemonsHP {
-		fmt.Printf(" - %s: %v\n", pokemon.Name, pokemon.HP)
+		fmt.Printf(" - %s: %v / %vhp\n", pokemon.Name, pokemon.CurrentHP, pokemon.MaxHP)
 	}
 
 	return nil

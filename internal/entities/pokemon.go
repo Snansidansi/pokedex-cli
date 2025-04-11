@@ -14,12 +14,21 @@ type Stats struct {
 }
 
 type PokemonHP struct {
-	Name string
-	HP   int
+	Name      string
+	CurrentHP int
+	MaxHP     int
 }
 
 func SortPokemonHP(a, b PokemonHP) int {
-	hpDiff := a.HP - b.HP
+	firstIsMaxHP := a.CurrentHP == a.MaxHP
+	secondIsMaxHP := b.CurrentHP == b.MaxHP
+	if firstIsMaxHP && !secondIsMaxHP {
+		return 1
+	} else if !firstIsMaxHP && secondIsMaxHP {
+		return -1
+	}
+
+	hpDiff := a.CurrentHP - b.CurrentHP
 	if hpDiff != 0 {
 		return hpDiff
 	}

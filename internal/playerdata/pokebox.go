@@ -45,8 +45,9 @@ func (p Pokebox) GetPokemonHPSorted() []entities.PokemonHP {
 	i := 0
 	for name, pokemon := range p {
 		pokemonsHP[i] = entities.PokemonHP{
-			Name: name,
-			HP:   pokemon.Stats.CurrentHP,
+			Name:      name,
+			CurrentHP: pokemon.Stats.CurrentHP,
+			MaxHP:     pokemon.Stats.MaxHP,
 		}
 		i++
 	}
