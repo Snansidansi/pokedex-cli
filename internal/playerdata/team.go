@@ -3,6 +3,7 @@ package playerdata
 import (
 	"errors"
 	"fmt"
+	"math"
 	"slices"
 	"sync"
 	"time"
@@ -173,4 +174,17 @@ func (team Team) HealPokemon(pokemonName string) error {
 	team.Pokemon[pokemonName] = pokemon
 
 	return nil
+}
+
+func (team Team) GetAverageLevel() int {
+	team.Mu.Lock()
+	defer team.Mu.Unlock()
+
+	avgLevel := 0
+	for _, pokemon := range team.Pokemon {
+		avgLevel += pokemon.GetLevel()
+	}
+	avgLevel = int(math.Round(float64(avgLevel) / float64(len(team.Pokemon))))
+
+	return avgLevel
 }

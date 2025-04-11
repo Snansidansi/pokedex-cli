@@ -90,3 +90,17 @@ func TestMasterBallMaxHasCatchChance(t *testing.T) {
 		})
 	}
 }
+
+func TestSetLevel(t *testing.T) {
+	cases := []int{1, 5, 10, 15, 20, 50, 69, 100, 150}
+	for _, level := range cases {
+		t.Run(fmt.Sprintf("Test with level %v", level), func(t *testing.T) {
+			pokemon := entities.Pokemon{}
+			pokemon.SetLevel(level)
+			if pokemon.GetLevel() != level {
+				t.Errorf("level was not set correctly: %v insted of %v\n", pokemon.GetLevel(), level)
+				return
+			}
+		})
+	}
+}

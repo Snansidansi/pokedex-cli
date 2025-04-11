@@ -109,6 +109,11 @@ func (pokemon Pokemon) GetLevel() int {
 	return int(math.Round(level))
 }
 
+func (pokemon *Pokemon) SetLevel(level int) {
+	xp := math.Ceil(math.Pow(float64(level)/XPForLevelTuningFactor, 2))
+	pokemon.CurrentExperience = int(xp)
+}
+
 func (pokemon Pokemon) GetXPForNextLevel() int {
 	currentLevel := pokemon.GetLevel()
 	nextLevel := currentLevel + 1
