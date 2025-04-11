@@ -14,7 +14,7 @@ func CommandListPokebox(conf *pokeapi.Config, _ ...string) error {
 		return errors.New("Your pokebox is empty")
 	}
 
-	fmt.Println("Pokemon in your pokebox:")
+	fmt.Printf("Pokemon in your pokebox (%v):\n", len(pokebox))
 	for _, name := range pokebox.GetAllNamesSorted() {
 		fmt.Printf(" - %s\n", name)
 	}
