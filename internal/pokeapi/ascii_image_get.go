@@ -46,8 +46,8 @@ func (c *Client) getImage(inputURL string) (image.Image, error) {
 func generateAsciiImage(img image.Image) string {
 
 	convertOptions := convert.DefaultOptions
-	convertOptions.FixedWidth = 100
-	convertOptions.FixedHeight = 50
+	convertOptions.FixedWidth = 80
+	convertOptions.FixedHeight = 40
 
 	converter := convert.NewImageConverter()
 	asciiImage := converter.Image2ASCIIString(img, &convertOptions)

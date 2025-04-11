@@ -20,9 +20,6 @@ func CommandInspectOwned(conf *pokeapi.Config, args ...string) error {
 		return errors.New("No pokemon with that name exists in your pokebox or team")
 	}
 
-	fmt.Printf("Details about %s:\n\n", pokemonName)
-	pokemon.Print()
-
 	asciiImage, err := conf.Client.GetAsciiImage(pokemon.ImageUrl)
 	if err != nil {
 		fmt.Println("image could not be displayed:")
@@ -30,6 +27,8 @@ func CommandInspectOwned(conf *pokeapi.Config, args ...string) error {
 	}
 	fmt.Println("")
 	fmt.Print(asciiImage)
+
+	pokemon.Print()
 
 	return nil
 }
