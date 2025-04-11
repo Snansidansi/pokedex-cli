@@ -174,34 +174,45 @@ func TestExperienceLoop(t *testing.T) {
 func TestGetAverageLevel(t *testing.T) {
 	cases := []struct {
 		name         string
+		teamSize     uint
 		pokemonLevel []int
 		expected     int
 	}{
 		{
 			name:         "all level the same",
+			teamSize:     3,
 			pokemonLevel: []int{5, 5, 5},
 			expected:     5,
 		},
 		{
 			name:         "no decimal result",
+			teamSize:     3,
 			pokemonLevel: []int{1, 6, 2},
 			expected:     3,
 		},
 		{
 			name:         "deciaml result over 0.5",
+			teamSize:     3,
 			pokemonLevel: []int{4, 11, 14},
 			expected:     10,
 		},
 		{
 			name:         "decimal result under 0.5",
+			teamSize:     3,
 			pokemonLevel: []int{50, 15, 2},
 			expected:     22,
+		},
+		{
+			name:         "empty team",
+			teamSize:     0,
+			pokemonLevel: []int{},
+			expected:     1,
 		},
 	}
 
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
-			team := NewTeam(3, 0, 0)
+			team := NewTeam(c.teamSize, 0, 0)
 			for j, level := range c.pokemonLevel {
 				pokemon := entities.Pokemon{}
 				pokemon.SetLevel(level)

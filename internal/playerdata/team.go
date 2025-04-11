@@ -180,6 +180,10 @@ func (team Team) GetAverageLevel() int {
 	team.Mu.Lock()
 	defer team.Mu.Unlock()
 
+	if len(team.Pokemon) == 0 {
+		return 1
+	}
+
 	avgLevel := 0
 	for _, pokemon := range team.Pokemon {
 		avgLevel += pokemon.GetLevel()
