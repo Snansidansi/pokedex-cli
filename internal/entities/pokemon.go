@@ -74,6 +74,11 @@ func (pokemon Pokemon) Print() {
 	}
 }
 
+func (pokemon *Pokemon) AddExperience(amount int) {
+	pokemon.CurrentExperience += amount
+	pokemon.RecalculateStats()
+}
+
 const XPForLevelTuningFactor = 0.4
 
 func (pokemon Pokemon) GetLevel() int {
