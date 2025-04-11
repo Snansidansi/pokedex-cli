@@ -6,6 +6,6 @@ import (
 )
 
 func commandHelp(_ *pokeapi.Config, _ ...string) error {
-	basecommands.BaseCommandHelp("Welcome to the pokedex\nUsage:\n\n", GetCommands())
+	basecommands.BaseCommandHelp("Welcome to the pokedex\nUsage:", GetCommands())
 	return nil
 }

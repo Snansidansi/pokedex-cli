@@ -6,6 +6,6 @@ import (
 )
 
 func commandHelp(_ *pokeapi.Config, _ ...string) error {
-	basecommands.BaseCommandHelp("Usage:\n\n", GetCommands())
+	basecommands.BaseCommandHelp("Usage:", GetCommands())
 	return nil
 }

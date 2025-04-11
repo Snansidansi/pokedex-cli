@@ -9,7 +9,8 @@ import (
 func BaseCommandHelp(headerMessage string, commands map[string]commands.Command) {
 	fmt.Println("")
 	fmt.Println("---------------------------------------------------")
-	fmt.Print(headerMessage)
+	fmt.Println(headerMessage)
+	fmt.Println("")
 
 	for _, command := range commands {
 		fmt.Printf("%s: %s\n", command.Name, command.Description)
