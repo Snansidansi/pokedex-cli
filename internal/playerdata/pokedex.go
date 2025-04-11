@@ -1,6 +1,8 @@
 package playerdata
 
-import "slices"
+import (
+	"slices"
+)
 
 type Pokedex struct {
 	Data map[string]struct{} `json:"data"`

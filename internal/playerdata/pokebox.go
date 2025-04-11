@@ -1,6 +1,7 @@
 package playerdata
 
 import (
+	"errors"
 	"fmt"
 	"slices"
 
@@ -54,4 +55,16 @@ func (p Pokebox) GetPokemonHPSorted() []entities.PokemonHP {
 
 	slices.SortFunc(pokemonsHP, entities.SortPokemonHP)
 	return pokemonsHP
+}
+
+func (p Pokebox) HealPokemon(pokemonName string) error {
+	pokemon, ok := p[pokemonName]
+	if !ok {
+		return errors.New("pokemon does not exists in the pokebox")
+	}
+
+	pokemon.Stats.CurrentHP = pokemon.Stats.MaxHP
+	p[pokemonName] = pokemon
+
+	return nil
 }

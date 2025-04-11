@@ -47,5 +47,10 @@ func GetCommands() map[string]commands.Command {
 			Description: "List how much hp every pokemon in your pokebox has",
 			Callback:    commandHP,
 		},
+		"heal": {
+			Name:        "heal",
+			Description: "Heal the specified pokemons",
+			Callback:    basecommands.CommandHeal,
+		},
 	}
 }

@@ -159,3 +159,18 @@ func (team Team) GetPokemonHPSorted() []entities.PokemonHP {
 	slices.SortFunc(pokemonsHP, entities.SortPokemonHP)
 	return pokemonsHP
 }
+
+func (team Team) HealPokemon(pokemonName string) error {
+	team.Mu.Lock()
+	defer team.Mu.Unlock()
+
+	pokemon, ok := team.Pokemon[pokemonName]
+	if !ok {
+		return errors.New("pokemon does not exists in the team")
+	}
+
+	pokemon.Stats.CurrentHP = pokemon.Stats.MaxHP
+	team.Pokemon[pokemonName] = pokemon
+
+	return nil
+}
