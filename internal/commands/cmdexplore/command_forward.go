@@ -35,14 +35,16 @@ func commandForward(conf *pokeapi.Config, _ ...string) error {
 }
 
 func manageEncounter(pokemonName string, conf *pokeapi.Config) error {
-	fmt.Printf("You've encountered a wild %s!\n", pokemonName)
-	fmt.Println("Do you want to flee or fight or catch it?")
-
 	pokemonDTO, err := conf.Client.GetPokemon(pokemonName)
 	if err != nil {
 		return err
 	}
 	pokemon := mapper.PokemonDTOToEntity(&pokemonDTO)
+
+	setEnemyLevel(conf, &pokemon)
+
+	fmt.Printf("You've encountered a wild %s level %v!\n", pokemonName, pokemon.GetLevel())
+	fmt.Println("Do you want to flee or fight or catch it?")
 
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
@@ -52,14 +54,22 @@ func manageEncounter(pokemonName string, conf *pokeapi.Config) error {
 
 		switch input {
 		case "catch":
+			fmt.Println("")
 			return basecommands.CommandCatch(conf, pokemonName)
 		case "fight":
+			fmt.Println("")
 			return fight(conf, pokemon)
 		case "flee":
+			fmt.Println("")
 			fmt.Printf("You fled form %s.\n", pokemonName)
 			return nil
 		}
 	}
+}
+
+func setEnemyLevel(conf *pokeapi.Config, pokemon *entities.Pokemon) {
+	avgTeamLevel := conf.PlayerData.Team.GetAverageLevel()
+	pokemon.SetLevel(avgTeamLevel)
 }
 
 func fight(conf *pokeapi.Config, pokemon entities.Pokemon) error {
@@ -79,7 +89,7 @@ func fight(conf *pokeapi.Config, pokemon entities.Pokemon) error {
 }
 
 func checkForEncounter(conf *pokeapi.Config) (string, bool, error) {
-	const encounterChance = 20
+	const encounterChance = 25
 
 	randNum := rand.Intn(101) + 1
 	if randNum > encounterChance {
