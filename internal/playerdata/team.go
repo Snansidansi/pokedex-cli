@@ -11,9 +11,11 @@ import (
 )
 
 type Team struct {
-	Pokemon map[string]entities.Pokemon `json:"pokemon"`
-	Mu      *sync.Mutex                 `json:"-"`
-	MaxSize uint                        `json:"max_size"`
+	Pokemon      map[string]entities.Pokemon `json:"pokemon"`
+	Mu           *sync.Mutex                 `json:"-"`
+	MaxSize      uint                        `json:"max_size"`
+	CurrentEnemy *entities.Pokemon           `json:"-"`
+	WonFight     bool                        `json:"-"`
 }
 
 func NewTeam(maxSize uint, passiveXPGain uint, passiveXPIntervall time.Duration) Team {
@@ -123,4 +125,18 @@ func (team Team) AddExperience(amount int) {
 		pokemon.AddExperience(amount)
 		team.Pokemon[name] = pokemon
 	}
+}
+
+func (team Team) HasAliveMembers() bool {
+	team.Mu.Lock()
+	defer team.Mu.Unlock()
+
+	aliveMembers := false
+	for _, pokemon := range team.Pokemon {
+		if pokemon.Stats.CurrentHP > 0 {
+			aliveMembers = true
+			break
+		}
+	}
+	return aliveMembers
 }
