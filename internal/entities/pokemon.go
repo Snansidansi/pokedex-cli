@@ -121,12 +121,11 @@ func (pokemon Pokemon) GetXPForNextLevel() int {
 
 func (pokemon *Pokemon) RecalculateStats() {
 	currentLevel := pokemon.GetLevel()
-	isFullLive := pokemon.Stats.MaxHP == pokemon.Stats.CurrentHP
+	oldMaxHP := pokemon.Stats.MaxHP
 
 	pokemon.Stats.MaxHP = pokemon.BaseStats.MaxHP + int(math.Pow(float64(currentLevel), 1.5))
-	if isFullLive {
-		pokemon.Stats.CurrentHP = pokemon.Stats.MaxHP
-	}
+	pokemon.Stats.Damage = pokemon.BaseStats.Damage + int(math.Pow(float64(currentLevel), 1.2))
 
-	pokemon.Stats.Damage = pokemon.BaseStats.Damage + int(math.Pow(float64(currentLevel), 1.7))
+	HPUpgrade := pokemon.Stats.MaxHP - oldMaxHP
+	pokemon.Stats.CurrentHP += HPUpgrade
 }
