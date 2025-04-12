@@ -83,12 +83,8 @@ func fight(conf *pokeapi.Config, pokemon entities.Pokemon) error {
 	conf.PlayerData.Team.CurrentEnemy = &pokemon
 	defer conf.PlayerData.Team.AfterFightCleanup()
 
-	fmt.Println("Enemy stats:")
-	fmt.Printf(" - Name: %s\n", pokemon.Name)
-	fmt.Printf(" - HP: %v\n", pokemon.Stats.MaxHP)
-	fmt.Printf(" - Damage: %v\n", pokemon.Stats.Damage)
+	cmdfight.CommandEnemy(conf)
 	fmt.Println("")
-
 	repl.StartRepl("Fight > ", conf, cmdfight.GetCommands())
 
 	if !conf.PlayerData.Team.WonFight {
