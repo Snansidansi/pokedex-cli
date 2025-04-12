@@ -11,7 +11,7 @@ func CommandEnemy(conf *pokeapi.Config, _ ...string) error {
 
 	fmt.Println("Enemy stats:")
 	fmt.Printf(" - Name: %s\n", pokemon.Name)
-	fmt.Printf(" - HP: %v\n", pokemon.Stats.MaxHP)
+	fmt.Printf(" - HP: %v / %vhp\n", pokemon.Stats.MaxHP, pokemon.Stats.CurrentHP)
 	fmt.Printf(" - Damage: %v\n", pokemon.Stats.Damage)
 
 	return nil
