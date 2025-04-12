@@ -9,7 +9,7 @@ import (
 	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 )
 
-const saveFileName = ".saveFile.json"
+const saveFileName = ".pokedex-cli-saveFile.json"
 
 type SaveFile struct {
 	Dir string

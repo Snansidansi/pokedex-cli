@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	workingDir, err := os.Getwd()
+	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -22,7 +22,7 @@ func main() {
 		Client:     pokeapi.NewClient(5*time.Second, 2*time.Minute, 5*time.Minute),
 		PlayerData: playerdata.NewPlayerData(),
 		SaveFile: pokeapi.SaveFile{
-			Dir: workingDir,
+			Dir: homeDir,
 		},
 	}
 
