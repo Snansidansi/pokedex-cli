@@ -198,3 +198,18 @@ func (team *Team) AfterFightCleanup() {
 	team.CurrentEnemy = nil
 	team.ActivePokemon = nil
 }
+
+func (team Team) DamagePokemon(pokemonName string, amount int) (pokemonDied bool, pokemonNotFound error) {
+	team.Mu.Lock()
+	defer team.Mu.Unlock()
+
+	pokemon, ok := team.Pokemon[pokemonName]
+	if !ok {
+		return false, errors.New("pokemon does not exist in the team")
+	}
+
+	pokemonDied = pokemon.TakeDamage(amount)
+	team.Pokemon[pokemonName] = pokemon
+
+	return pokemonDied, nil
+}

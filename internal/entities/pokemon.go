@@ -112,6 +112,7 @@ func (pokemon Pokemon) GetLevel() int {
 func (pokemon *Pokemon) SetLevel(level int) {
 	xp := math.Ceil(math.Pow(float64(level)/XPForLevelTuningFactor, 2))
 	pokemon.CurrentExperience = int(xp)
+	pokemon.RecalculateStats()
 }
 
 func (pokemon Pokemon) GetXPForNextLevel() int {
@@ -133,4 +134,12 @@ func (pokemon *Pokemon) RecalculateStats() {
 
 	HPUpgrade := pokemon.Stats.MaxHP - oldMaxHP
 	pokemon.Stats.CurrentHP += HPUpgrade
+}
+
+func (pokemon *Pokemon) TakeDamage(amount int) (pokemonDied bool) {
+	pokemon.Stats.CurrentHP -= amount
+	if pokemon.Stats.CurrentHP < 0 {
+		return true
+	}
+	return false
 }

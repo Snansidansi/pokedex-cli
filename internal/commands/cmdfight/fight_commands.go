@@ -27,5 +27,15 @@ func GetCommands() map[string]commands.Command {
 			Description: "Select a pokemon from your team to fight",
 			Callback:    commandSelect,
 		},
+		"attack": {
+			Name:        "attack",
+			Description: "Attack the enemy pokemon with you selected pokemon",
+			Callback:    commandAttack,
+		},
+		"stats": {
+			Name:        "stats",
+			Description: "Show the stats of you selected pokemon",
+			Callback:    commandStats,
+		},
 	}
 }

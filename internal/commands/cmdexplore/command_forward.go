@@ -16,9 +16,9 @@ import (
 )
 
 func commandForward(conf *pokeapi.Config, _ ...string) error {
-	for range 3 {
+	for range 5 {
 		fmt.Print(".")
-		time.Sleep(250 * time.Millisecond)
+		time.Sleep(75 * time.Millisecond)
 	}
 	fmt.Println("")
 
@@ -91,14 +91,10 @@ func fight(conf *pokeapi.Config, pokemon entities.Pokemon) error {
 
 	repl.StartRepl("Fight > ", conf, cmdfight.GetCommands())
 
-	if conf.PlayerData.Team.WonFight {
-		fmt.Printf("You won the fight! All the Pokemon in you team gain %vxp.\n", pokemon.BaseExperience)
-		conf.PlayerData.Team.AddExperience(pokemon.BaseExperience)
-		return nil
+	if !conf.PlayerData.Team.WonFight {
+		return commandStop(conf)
 	}
-
-	fmt.Println("You lost the fight, you should heal your pokemon.")
-	return commandStop(conf)
+	return nil
 }
 
 func checkForEncounter(conf *pokeapi.Config) (string, bool, error) {
