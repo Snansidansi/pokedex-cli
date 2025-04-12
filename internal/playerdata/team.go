@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"math/rand"
 	"slices"
 	"sync"
 	"time"
@@ -215,4 +216,25 @@ func (team Team) DamagePokemon(pokemonName string, amount int) (pokemonDied bool
 	team.Pokemon[pokemonName] = pokemon
 
 	return pokemonDied, nil
+}
+
+func (team Team) GetHighesLevel() int {
+	team.Mu.Lock()
+	defer team.Mu.Unlock()
+
+	maxLevel := 0
+	for _, pokemon := range team.Pokemon {
+		if pokemon.GetLevel() > maxLevel {
+			maxLevel = pokemon.GetLevel()
+		}
+	}
+	return maxLevel
+}
+
+func (team Team) CalcEnemyLevel() int {
+	maxLevel := team.GetHighesLevel()
+	randNum := rand.Intn(7) - 2
+
+	level := maxLevel + randNum
+	return level
 }

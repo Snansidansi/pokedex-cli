@@ -75,8 +75,8 @@ func manageEncounter(pokemonName string, conf *pokeapi.Config) error {
 }
 
 func setEnemyLevel(conf *pokeapi.Config, pokemon *entities.Pokemon) {
-	avgTeamLevel := conf.PlayerData.Team.GetAverageLevel()
-	pokemon.SetLevel(avgTeamLevel)
+	level := conf.PlayerData.Team.CalcEnemyLevel()
+	pokemon.SetLevel(level)
 }
 
 func fight(conf *pokeapi.Config, pokemon entities.Pokemon) error {
