@@ -196,6 +196,9 @@ func (team Team) GetAverageLevel() int {
 
 func (team *Team) AfterFightCleanup() {
 	team.CurrentEnemy = nil
+}
+
+func (team *Team) AfterExplorationCleanup() {
 	team.ActivePokemon = nil
 }
 

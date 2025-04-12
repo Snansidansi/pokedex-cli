@@ -23,5 +23,7 @@ func commandExplore(conf *pokeapi.Config, args ...string) error {
 
 	fmt.Printf("You are now in: %s\n", location.Name)
 	repl.StartRepl("exploring > ", conf, cmdexplore.GetCommands())
+
+	conf.PlayerData.Team.AfterExplorationCleanup()
 	return nil
 }

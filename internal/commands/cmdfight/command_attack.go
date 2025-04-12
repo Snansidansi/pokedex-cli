@@ -11,6 +11,8 @@ import (
 	"github.com/snansidansi/pokedex-cli/internal/repl"
 )
 
+const timeBetweenFightMessages = 333 * time.Millisecond
+
 func commandAttack(conf *pokeapi.Config, _ ...string) error {
 	team := &conf.PlayerData.Team
 	if team.ActivePokemon == nil {
@@ -32,7 +34,7 @@ func commandAttack(conf *pokeapi.Config, _ ...string) error {
 		return err
 	}
 
-	time.Sleep(350 * time.Millisecond)
+	time.Sleep(timeBetweenFightMessages)
 
 	err = enemyPokemonAttack(enemyPokemon, team)
 	if err != nil {
@@ -45,7 +47,9 @@ func commandAttack(conf *pokeapi.Config, _ ...string) error {
 func teamPokemonAttack(enemyPokemon, teamPokemon *entities.Pokemon, team *playerdata.Team) error {
 	enemyDied := enemyPokemon.TakeDamage(teamPokemon.Stats.Damage)
 	fmt.Printf("%s attacks %s\n", *team.ActivePokemon, enemyPokemon.Name)
+	time.Sleep(timeBetweenFightMessages)
 	fmt.Printf("%s takes %v damage\n", enemyPokemon.Name, teamPokemon.Stats.Damage)
+	time.Sleep(timeBetweenFightMessages)
 
 	if enemyDied {
 		fmt.Println("")
@@ -56,7 +60,7 @@ func teamPokemonAttack(enemyPokemon, teamPokemon *entities.Pokemon, team *player
 		return repl.ExitReplError{}
 	}
 
-	fmt.Printf("Hp of %s: %v\n", enemyPokemon.Name, enemyPokemon.Stats.CurrentHP)
+	fmt.Printf("Hp of %s: %v / %vhp\n", enemyPokemon.Name, enemyPokemon.Stats.CurrentHP, enemyPokemon.Stats.MaxHP)
 	fmt.Println("")
 	return nil
 }
@@ -68,11 +72,13 @@ func enemyPokemonAttack(enemyPokemon *entities.Pokemon, team *playerdata.Team) e
 	}
 
 	fmt.Printf("%s attacks %s\n", enemyPokemon.Name, *team.ActivePokemon)
+	time.Sleep(timeBetweenFightMessages)
 	fmt.Printf("%s takes %v damage\n", *team.ActivePokemon, enemyPokemon.Stats.Damage)
+	time.Sleep(timeBetweenFightMessages)
 
 	if teamPokemonDied {
 		fmt.Println("")
-		fmt.Printf("%s was defeated.", *team.ActivePokemon)
+		fmt.Printf("%s was defeated.\n", *team.ActivePokemon)
 
 		if !team.HasAliveMembers() {
 			fmt.Println("")
@@ -83,7 +89,10 @@ func enemyPokemonAttack(enemyPokemon *entities.Pokemon, team *playerdata.Team) e
 		}
 
 		fmt.Println("Select a new pokemon from you team to fight")
+		return nil
 	}
 
+	teamPokemon, _ := team.Get(*team.ActivePokemon)
+	fmt.Printf("Hp of %s: %v / %vhp\n", *team.ActivePokemon, teamPokemon.Stats.CurrentHP, teamPokemon.Stats.MaxHP)
 	return nil
 }
