@@ -7,17 +7,27 @@ import (
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
-func commandStats(conf *pokeapi.Config, _ ...string) error {
-	if conf.PlayerData.Team.ActivePokemon == nil {
-		return errors.New("Your active pokemon is not in your team anymore.\nSelect a different one with the select command.")
+func commandStats(conf *pokeapi.Config, args ...string) error {
+	if len(args) > 1 {
+		return errors.New("expecting at most one pokemon name")
 	}
 
-	pokemon, ok := conf.PlayerData.Team.Get(*conf.PlayerData.Team.ActivePokemon)
+	var pokemonName string
+	if len(args) == 0 {
+		if conf.PlayerData.Team.ActivePokemon == nil {
+			return errors.New("Your active pokemon is not in your team anymore.\nSelect a different one with the select command.")
+		}
+		pokemonName = *conf.PlayerData.Team.ActivePokemon
+	} else {
+		pokemonName = args[0]
+	}
+
+	pokemon, ok := conf.PlayerData.Team.Get(pokemonName)
 	if !ok {
-		return errors.New("Your active pokemon is not in your team anymore.\nSelect a different one with the select command.")
+		return errors.New("this pokemon is not in your team")
 	}
 
-	fmt.Printf("Stats of %s:\n", *conf.PlayerData.Team.ActivePokemon)
+	fmt.Printf("Stats of %s:\n", pokemonName)
 	fmt.Printf(" - Pokemon: %s\n", pokemon.Name)
 	fmt.Printf(" - HP: %v / %v hp\n", pokemon.Stats.CurrentHP, pokemon.Stats.MaxHP)
 	fmt.Printf(" - Damage: %v\n", pokemon.Stats.Damage)

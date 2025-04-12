@@ -34,7 +34,7 @@ func GetCommands() map[string]commands.Command {
 		},
 		"stats": {
 			Name:        "stats",
-			Description: "Show the stats of you selected pokemon",
+			Description: "Show the stats of you selected pokemon or a specified pokemon from your team",
 			Callback:    commandStats,
 		},
 	}
