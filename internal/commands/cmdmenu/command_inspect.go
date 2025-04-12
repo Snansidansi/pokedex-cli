@@ -22,7 +22,7 @@ func commandInspect(conf *pokeapi.Config, args ...string) error {
 		return err
 	}
 
-	asciiImmage, err := conf.Client.GetAsciiImage(pokemon.Sprites.Other.OfficialArtwork.FrontDefault, 0)
+	asciiImmage, err := conf.Client.GetAsciiImage(pokemon.Sprites.Other.OfficialArtwork.FrontDefault, 30)
 	if err != nil {
 		fmt.Println("image could not be displayed:")
 		return err
