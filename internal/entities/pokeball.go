@@ -51,7 +51,13 @@ func GetPokeballsSorted() []PokeBall {
 	}
 
 	slices.SortFunc(pokeballsSorted, func(a, b PokeBall) int {
-		return int(a.CatchRateMultiplier) - int(b.CatchRateMultiplier)
+		if a.CatchRateMultiplier < b.CatchRateMultiplier {
+			return -1
+		} else if a.CatchRateMultiplier > b.CatchRateMultiplier {
+			return 1
+		} else {
+			return 0
+		}
 	})
 
 	return pokeballsSorted
