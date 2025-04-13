@@ -15,20 +15,20 @@ func GetPokeballs() map[string]PokeBall {
 	return map[string]PokeBall{
 		"Poké Ball": {
 			Name:                "Poké Ball",
-			Rarity:              18,
+			Rarity:              12,
 			MaxLootAmount:       5,
 			CatchRateMultiplier: 1.0,
 		},
 		"Great Ball": {
 			Name:                "Great Ball",
-			Rarity:              8,
-			MaxLootAmount:       3,
+			Rarity:              5,
+			MaxLootAmount:       2,
 			CatchRateMultiplier: 1.5,
 		},
 		"Ultra Ball": {
 			Name:                "Ultra Ball",
-			Rarity:              5,
-			MaxLootAmount:       2,
+			Rarity:              3,
+			MaxLootAmount:       1,
 			CatchRateMultiplier: 2.0,
 		},
 		"Master Ball": {
