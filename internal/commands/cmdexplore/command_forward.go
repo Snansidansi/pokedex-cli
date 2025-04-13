@@ -67,7 +67,7 @@ func manageEncounter(pokemonName string, conf *pokeapi.Config) error {
 		switch input {
 		case "catch":
 			fmt.Println("")
-			return basecommands.CommandCatch(conf, pokemonName)
+			return basecommands.BaseCommandCatch(conf, pokemon)
 		case "fight":
 			fmt.Println("")
 			if !conf.PlayerData.Team.HasAliveMembers() {

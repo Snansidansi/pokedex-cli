@@ -2,7 +2,6 @@ package basecommands
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"math/rand"
 	"os"
@@ -10,44 +9,36 @@ import (
 	"time"
 
 	"github.com/snansidansi/pokedex-cli/internal/entities"
-	"github.com/snansidansi/pokedex-cli/internal/entities/mapper"
 	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
-func CommandCatch(conf *pokeapi.Config, args ...string) error {
-	if len(args) < 1 {
-		return errors.New("expecting pokemon name")
-	}
-
-	pokemonNameOrID := args[0]
-	pokemonDTO, err := conf.Client.GetPokemon(pokemonNameOrID)
+func BaseCommandCatch(conf *pokeapi.Config, pokemon entities.Pokemon) error {
+	pokeball, err := choosePokeBall(conf.PlayerData.PokeballInv, pokemon)
 	if err != nil {
 		return err
 	}
+	catchChance := pokemon.CalcCatchChance(pokeball.CatchRateMultiplier)
+	catched := pokemon.Catch(pokeball)
 
-	pokeball, err := choosePokeBall(conf.PlayerData.PokeballInv, &pokemonDTO)
-	if err != nil {
-		return err
-	}
-	catchChance := pokemonDTO.CalcCatchChance(pokeball.CatchRateMultiplier)
-	catched := pokemonDTO.Catch(pokeball)
-
-	printCatchProcess(pokemonDTO.Name, catchChance)
+	printCatchProcess(pokemon.Name, catchChance)
 
 	if !catched {
-		fmt.Printf("%s escaped!\n", pokemonDTO.Name)
-		return nil
+		return handleNotCatched(conf, pokemon)
 	}
 
-	conf.PlayerData.Pokedex.Add(pokemonDTO.Name)
-	fmt.Printf("%s was caught!\n", pokemonDTO.Name)
+	conf.PlayerData.Pokedex.Add(pokemon.Name)
+	fmt.Printf("%s was caught!\n", pokemon.Name)
 
-	pokemonName := choosePokemonName(conf, pokemonDTO.Name)
-	conf.PlayerData.Pokebox[pokemonName] = mapper.PokemonDTOToEntity(&pokemonDTO)
+	pokemonName := choosePokemonName(conf, pokemon.Name)
+	conf.PlayerData.Pokebox[pokemonName] = pokemon
 	fmt.Printf("%s was added to the pokebox\n", pokemonName)
 
 	return nil
+}
+
+func handleNotCatched(conf *pokeapi.Config, pokemon entities.Pokemon) error {
+	return fmt.Errorf("%s escaped!\n", pokemon.Name)
 }
 
 func printCatchProcess(pokemonName string, catchChance int) {
@@ -83,7 +74,7 @@ func choosePokemonName(conf *pokeapi.Config, defaultPokemonName string) string {
 	return assignedName
 }
 
-func choosePokeBall(pokeballInv playerdata.PokeballInv, pokemon *pokeapi.PokemonDTO) (entities.PokeBall, error) {
+func choosePokeBall(pokeballInv playerdata.PokeballInv, pokemon entities.Pokemon) (entities.PokeBall, error) {
 	scanner := bufio.NewScanner(os.Stdin)
 	allPokeballs := entities.GetPokeballsSorted()
 
