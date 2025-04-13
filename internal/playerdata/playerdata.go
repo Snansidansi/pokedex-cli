@@ -3,9 +3,10 @@ package playerdata
 import "time"
 
 type PlayerData struct {
-	Pokedex Pokedex `json:"pokedex"`
-	Pokebox Pokebox `json:"pokebox"`
-	Team    Team    `json:"team"`
+	Pokedex     Pokedex     `json:"pokedex"`
+	Pokebox     Pokebox     `json:"pokebox"`
+	Team        Team        `json:"team"`
+	PokeballInv PokeballInv `json:"pokeball_inventory"`
 }
 
 const (

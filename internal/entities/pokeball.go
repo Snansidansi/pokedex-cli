@@ -1,5 +1,9 @@
 package entities
 
+import (
+	"slices"
+)
+
 type PokeBall struct {
 	Name                string
 	CatchRateMultiplier float64
@@ -24,4 +28,21 @@ func GetPokeballs() map[string]PokeBall {
 			CatchRateMultiplier: 255.0,
 		},
 	}
+}
+
+func GetPokeballsSorted() []PokeBall {
+	pokeballsUnsorted := GetPokeballs()
+	pokeballsSorted := make([]PokeBall, len(pokeballsUnsorted))
+
+	i := 0
+	for _, pokeball := range pokeballsUnsorted {
+		pokeballsSorted[i] = pokeball
+		i++
+	}
+
+	slices.SortFunc(pokeballsSorted, func(a, b PokeBall) int {
+		return int(a.CatchRateMultiplier) - int(b.CatchRateMultiplier)
+	})
+
+	return pokeballsSorted
 }

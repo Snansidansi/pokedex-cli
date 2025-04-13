@@ -46,7 +46,7 @@ func commandAdd(conf *pokeapi.Config, args ...string) error {
 	}
 
 	if len(notExisting) != 0 {
-		fmt.Println("Could not add pokemon to the pokebox because they dont exist in your pokebox:")
+		fmt.Println("Could not add pokemon to the pokebox because they don't exist in your pokebox:")
 		for _, name := range notExisting {
 			fmt.Printf(" - %s\n", name)
 		}

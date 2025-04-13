@@ -35,7 +35,7 @@ func CommandHeal(conf *pokeapi.Config, args ...string) error {
 	}
 
 	if len(notExisting) != 0 {
-		fmt.Printf("You dont own these pokemon (%v):\n", len(notExisting))
+		fmt.Printf("You don't own these pokemon (%v):\n", len(notExisting))
 		for _, pokemonName := range notExisting {
 			fmt.Printf(" - %s\n", pokemonName)
 		}

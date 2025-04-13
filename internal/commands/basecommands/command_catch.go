@@ -11,6 +11,7 @@ import (
 
 	"github.com/snansidansi/pokedex-cli/internal/entities"
 	"github.com/snansidansi/pokedex-cli/internal/entities/mapper"
+	"github.com/snansidansi/pokedex-cli/internal/playerdata"
 	"github.com/snansidansi/pokedex-cli/internal/pokeapi"
 )
 
@@ -25,7 +26,10 @@ func CommandCatch(conf *pokeapi.Config, args ...string) error {
 		return err
 	}
 
-	pokeball := choosePokeBall(&pokemonDTO)
+	pokeball, err := choosePokeBall(conf.PlayerData.PokeballInv, &pokemonDTO)
+	if err != nil {
+		return err
+	}
 	catchChance := pokemonDTO.CalcCatchChance(pokeball.CatchRateMultiplier)
 	catched := pokemonDTO.Catch(pokeball)
 
@@ -79,16 +83,25 @@ func choosePokemonName(conf *pokeapi.Config, defaultPokemonName string) string {
 	return assignedName
 }
 
-func choosePokeBall(pokemon *pokeapi.PokemonDTO) entities.PokeBall {
+func choosePokeBall(pokeballInv playerdata.PokeballInv, pokemon *pokeapi.PokemonDTO) (entities.PokeBall, error) {
 	scanner := bufio.NewScanner(os.Stdin)
-	availablePokeBalls := entities.GetPokeballs()
+	allPokeballs := entities.GetPokeballsSorted()
+
+	if pokeballInv.IsEmpty() {
+		return entities.PokeBall{}, fmt.Errorf("You don't have any pokeballs.\nFleeing from %s.", pokemon.Name)
+	}
 
 	fmt.Println("--------------------------------")
 	fmt.Println("Please select a Poke Ball (type nothing for the default ball):")
 
-	for _, pokeBall := range availablePokeBalls {
+	for _, pokeBall := range allPokeballs {
+		amount, ok := pokeballInv[pokeBall.Name]
+		if !ok {
+			continue
+		}
+
 		catchChance := pokemon.CalcCatchChance(pokeBall.CatchRateMultiplier)
-		fmt.Printf(" - %s (%v %%)\n", pokeBall.Name, catchChance)
+		fmt.Printf(" - %s (%v %%): %vx\n", pokeBall.Name, catchChance, amount)
 	}
 	fmt.Println()
 
@@ -99,12 +112,18 @@ func choosePokeBall(pokemon *pokeapi.PokemonDTO) entities.PokeBall {
 		input := strings.TrimSpace(scanner.Text())
 
 		if input == "" {
-			fmt.Print("Pokè Ball\n")
-			return availablePokeBalls["Poké Ball"]
+			fmt.Println("Pokè Ball")
+			input = "Pokè Ball"
 		}
 
-		if selectedPokeBall, ok := availablePokeBalls[input]; ok {
-			return selectedPokeBall
+		if amount, ok := pokeballInv[input]; ok {
+			if amount < 1 {
+				fmt.Println("You do not have any pokeballs of this type left")
+				continue
+			}
+
+			pokeballInv[input]--
+			return entities.GetPokeballs()[input], nil
 		}
 		fmt.Println("This Pokeball does not exist!")
 	}
