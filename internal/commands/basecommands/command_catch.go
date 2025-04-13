@@ -95,8 +95,8 @@ func choosePokeBall(pokeballInv playerdata.PokeballInv, pokemon *pokeapi.Pokemon
 	fmt.Println("Please select a Poke Ball (type nothing for the default ball):")
 
 	for _, pokeBall := range allPokeballs {
-		amount, ok := pokeballInv[pokeBall.Name]
-		if !ok {
+		amount := pokeballInv[pokeBall.Name]
+		if amount < 1 {
 			continue
 		}
 
