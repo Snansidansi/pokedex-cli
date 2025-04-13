@@ -6,6 +6,8 @@ import (
 
 type PokeBall struct {
 	Name                string
+	Rarity              int
+	MaxLootAmount       int
 	CatchRateMultiplier float64
 }
 
@@ -13,18 +15,26 @@ func GetPokeballs() map[string]PokeBall {
 	return map[string]PokeBall{
 		"Poké Ball": {
 			Name:                "Poké Ball",
+			Rarity:              18,
+			MaxLootAmount:       5,
 			CatchRateMultiplier: 1.0,
 		},
 		"Great Ball": {
 			Name:                "Great Ball",
+			Rarity:              8,
+			MaxLootAmount:       3,
 			CatchRateMultiplier: 1.5,
 		},
 		"Ultra Ball": {
 			Name:                "Ultra Ball",
+			Rarity:              5,
+			MaxLootAmount:       2,
 			CatchRateMultiplier: 2.0,
 		},
 		"Master Ball": {
 			Name:                "Master Ball",
+			Rarity:              1,
+			MaxLootAmount:       1,
 			CatchRateMultiplier: 255.0,
 		},
 	}

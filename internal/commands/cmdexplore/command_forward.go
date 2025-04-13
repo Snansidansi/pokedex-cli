@@ -20,6 +20,16 @@ func commandForward(conf *pokeapi.Config, _ ...string) error {
 		fmt.Print(".")
 		time.Sleep(75 * time.Millisecond)
 	}
+
+	foundLoot := conf.PlayerData.PokeballInv.FindPokeballLoot()
+	if len(foundLoot) != 0 {
+		fmt.Println("")
+		fmt.Println("")
+		fmt.Println("You found loot:")
+	}
+	for _, loot := range foundLoot {
+		fmt.Printf(" - %s: %vx\n", loot.Name, loot.Amount)
+	}
 	fmt.Println("")
 
 	pokemonName, ok, err := checkForEncounter(conf)
@@ -27,7 +37,7 @@ func commandForward(conf *pokeapi.Config, _ ...string) error {
 		return err
 	}
 	if !ok {
-		fmt.Println("Nothing here")
+		fmt.Println("Here is no pokemon")
 		return nil
 	}
 

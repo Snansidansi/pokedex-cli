@@ -17,8 +17,9 @@ const (
 
 func NewPlayerData() PlayerData {
 	return PlayerData{
-		Pokedex: NewPokedex(),
-		Pokebox: Pokebox{},
-		Team:    NewTeam(maxTeamSize, passiveXPGain, passiveXPIntervall),
+		Pokedex:     NewPokedex(),
+		Pokebox:     Pokebox{},
+		Team:        NewTeam(maxTeamSize, passiveXPGain, passiveXPIntervall),
+		PokeballInv: NewPokeballInv(),
 	}
 }

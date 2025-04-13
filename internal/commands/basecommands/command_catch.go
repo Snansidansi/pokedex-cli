@@ -112,11 +112,12 @@ func choosePokeBall(pokeballInv playerdata.PokeballInv, pokemon *pokeapi.Pokemon
 		input := strings.TrimSpace(scanner.Text())
 
 		if input == "" {
-			fmt.Println("Pokè Ball")
-			input = "Pokè Ball"
+			fmt.Println("Poké Ball")
+			input = "Poké Ball"
 		}
 
 		if amount, ok := pokeballInv[input]; ok {
+			fmt.Printf("%s: %v\n", input, amount)
 			if amount < 1 {
 				fmt.Println("You do not have any pokeballs of this type left")
 				continue
