@@ -218,7 +218,7 @@ func (team Team) DamagePokemon(pokemonName string, amount int) (pokemonDied bool
 	return pokemonDied, nil
 }
 
-func (team Team) GetHighesLevel() int {
+func (team Team) GetHighestLevel() int {
 	team.Mu.Lock()
 	defer team.Mu.Unlock()
 
@@ -232,9 +232,38 @@ func (team Team) GetHighesLevel() int {
 }
 
 func (team Team) CalcEnemyLevel() int {
-	maxLevel := team.GetHighesLevel()
+	maxLevel := team.GetHighestLevel()
 	randNum := rand.Intn(7) - 2
 
 	level := maxLevel + randNum
 	return level
+}
+
+func (team Team) GetAliveMemberNames() []string {
+	team.Mu.Lock()
+	defer team.Mu.Unlock()
+
+	aliveNames := []string{}
+	for name, pokemon := range team.Pokemon {
+		if pokemon.Stats.CurrentHP > 0 {
+			aliveNames = append(aliveNames, name)
+		}
+	}
+
+	return aliveNames
+}
+
+func (team Team) DamageRandom(amount int) (pokemonName string, died bool, error error) {
+	aliveTeamNames := team.GetAliveMemberNames()
+	if len(aliveTeamNames) == 0 {
+		return "", false, errors.New("Can not damage random pokemon in team: team is empty or defeated")
+	}
+
+	team.Mu.Lock()
+	randPokemon := rand.Intn(len(aliveTeamNames))
+	pokemonName = aliveTeamNames[randPokemon]
+	team.Mu.Unlock()
+
+	died, _ = team.DamagePokemon(pokemonName, amount)
+	return pokemonName, died, nil
 }
