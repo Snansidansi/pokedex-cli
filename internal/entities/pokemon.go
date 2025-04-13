@@ -75,7 +75,7 @@ func (p Pokemon) Catch(pokeball PokeBall) (success bool) {
 
 	catchChance := p.CalcCatchChance(pokeball.CatchRateMultiplier)
 
-	randNum := rand.Intn(101) + 1
+	randNum := rand.Intn(100) + 1
 	catched := (randNum <= catchChance)
 
 	return catched
