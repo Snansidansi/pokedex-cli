@@ -104,6 +104,8 @@ func handleNotCatched(team playerdata.Team, enemyPokemon entities.Pokemon) error
 		return nil
 	}
 
+	fmt.Println(spacer)
+	fmt.Println("")
 	return fmt.Errorf("%s escaped!\n", enemyPokemon.Name)
 }
 
