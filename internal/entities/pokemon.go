@@ -3,6 +3,7 @@ package entities
 import (
 	"fmt"
 	"math"
+	"math/rand"
 	"strings"
 )
 
@@ -65,6 +66,33 @@ type Pokemon struct {
 		} `json:"type"`
 	} `json:"types"`
 	ImageUrl string `json:"official-artwork"`
+}
+
+func (p Pokemon) Catch(pokeball PokeBall) (success bool) {
+	if pokeball.Name == "Master Ball" {
+		return true
+	}
+
+	catchChance := p.CalcCatchChance(pokeball.CatchRateMultiplier)
+
+	randNum := rand.Intn(101) + 1
+	catched := (randNum <= catchChance)
+
+	return catched
+}
+
+func (p Pokemon) CalcCatchChance(catchChanceMultiplier float64) int {
+	if catchChanceMultiplier == GetPokeballs()["Master Ball"].CatchRateMultiplier {
+		return 100
+	}
+
+	const minCatchChance = 5
+	catchDifficulty := float64(p.BaseExperience) / (3.5 * catchChanceMultiplier * 0.5)
+
+	catchChance := 100 - int(catchDifficulty)
+	catchChance = max(minCatchChance, catchChance)
+
+	return catchChance
 }
 
 func (pokemon Pokemon) Print() {

@@ -1,14 +1,12 @@
-package pokeapi
+package entities
 
 import (
 	"fmt"
 	"testing"
-
-	"github.com/snansidansi/pokedex-cli/internal/entities"
 )
 
 func TestCalcCatchChance(t *testing.T) {
-	pokemon := PokemonDTO{
+	pokemon := Pokemon{
 		BaseExperience: 100,
 	}
 	cases := []struct {
@@ -52,7 +50,7 @@ func TestCalcCatchChance(t *testing.T) {
 
 func TestMasterBallMaxHasCatchChance(t *testing.T) {
 	const expectedCatchChance = 100
-	pokemons := []PokemonDTO{
+	pokemons := []Pokemon{
 		{
 			BaseExperience: 0,
 		},
@@ -78,7 +76,7 @@ func TestMasterBallMaxHasCatchChance(t *testing.T) {
 
 	for i, pokemon := range pokemons {
 		t.Run(fmt.Sprintf("Subtest %v:", i), func(t *testing.T) {
-			masterBallCatchChanceMulti := entities.GetPokeballs()["Master Ball"].CatchRateMultiplier
+			masterBallCatchChanceMulti := GetPokeballs()["Master Ball"].CatchRateMultiplier
 			actualCatchChance := pokemon.CalcCatchChance(masterBallCatchChanceMulti)
 
 			if actualCatchChance != expectedCatchChance {
@@ -95,7 +93,7 @@ func TestSetLevel(t *testing.T) {
 	cases := []int{1, 5, 10, 15, 20, 50, 69, 100, 150}
 	for _, level := range cases {
 		t.Run(fmt.Sprintf("Test with level %v", level), func(t *testing.T) {
-			pokemon := entities.Pokemon{}
+			pokemon := Pokemon{}
 			pokemon.SetLevel(level)
 			if pokemon.GetLevel() != level {
 				t.Errorf("level was not set correctly: %v insted of %v\n", pokemon.GetLevel(), level)
