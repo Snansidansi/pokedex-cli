@@ -27,6 +27,12 @@ func commandStats(conf *pokeapi.Config, args ...string) error {
 		return errors.New("this pokemon is not in your team")
 	}
 
+	asciiArt, err := conf.Client.GetAsciiImage(pokemon.ImageUrl, 15)
+	if err != nil {
+		return err
+	}
+
+	fmt.Print(asciiArt)
 	fmt.Printf("Stats of %s:\n", pokemonName)
 	fmt.Printf(" - Pokemon: %s\n", pokemon.Name)
 	fmt.Printf(" - HP: %v / %v hp\n", pokemon.Stats.CurrentHP, pokemon.Stats.MaxHP)
