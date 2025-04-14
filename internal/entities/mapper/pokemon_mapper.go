@@ -7,6 +7,7 @@ import (
 
 func PokemonDTOToEntity(pokemonDTO *pokeapi.PokemonDTO) entities.Pokemon {
 	stats, baseStats := mapStats(pokemonDTO)
+	types := mapTypes(pokemonDTO)
 
 	return entities.Pokemon{
 		ID:                pokemonDTO.ID,
@@ -14,13 +15,10 @@ func PokemonDTOToEntity(pokemonDTO *pokeapi.PokemonDTO) entities.Pokemon {
 		BaseExperience:    pokemonDTO.BaseExperience,
 		CurrentExperience: 0,
 		Height:            pokemonDTO.Height,
-		Order:             pokemonDTO.Order,
 		Weight:            pokemonDTO.Weight,
-		Abilities:         pokemonDTO.Abilities,
 		Stats:             stats,
 		BaseStats:         baseStats,
-		Forms:             pokemonDTO.Forms,
-		Types:             pokemonDTO.Types,
+		Types:             types,
 		ImageUrl:          pokemonDTO.Sprites.Other.OfficialArtwork.FrontDefault,
 	}
 }
@@ -35,15 +33,24 @@ func mapStats(pokemonDTO *pokeapi.PokemonDTO) (stats, baseStats entities.Stats) 
 		MaxHP:     tempStats["hp"],
 		CurrentHP: tempStats["hp"],
 		Damage:    tempStats["attack"],
-		Speed:     tempStats["speed"],
 	}
 
 	baseStats = entities.Stats{
 		MaxHP:     stats.MaxHP,
 		CurrentHP: 0,
 		Damage:    stats.Damage,
-		Speed:     stats.Speed,
 	}
 
 	return stats, baseStats
+}
+
+func mapTypes(pokemonDTO *pokeapi.PokemonDTO) []string {
+	types := make([]string, len(pokemonDTO.Types))
+	i := 0
+	for _, t := range pokemonDTO.Types {
+		types[i] = t.Type.Name
+		i++
+	}
+
+	return types
 }

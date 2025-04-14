@@ -11,7 +11,6 @@ type Stats struct {
 	MaxHP     int
 	CurrentHP int
 	Damage    int
-	Speed     int
 }
 
 type PokemonHP struct {
@@ -37,35 +36,16 @@ func SortPokemonHP(a, b PokemonHP) int {
 }
 
 type Pokemon struct {
-	ID                int    `json:"id"`
-	Name              string `json:"name"`
-	BaseExperience    int    `json:"base_experience"`
-	CurrentExperience int    `json:"current_experience"`
-	Height            int    `json:"height"`
-	Order             int    `json:"order"`
-	Weight            int    `json:"weight"`
-	Abilities         []struct {
-		IsHidden bool `json:"is_hidden"`
-		Slot     int  `json:"slot"`
-		Ability  struct {
-			Name string `json:"name"`
-			URL  string `json:"url"`
-		} `json:"ability"`
-	} `json:"abilities"`
-	Forms []struct {
-		Name string `json:"name"`
-		URL  string `json:"url"`
-	} `json:"forms"`
-	Stats     Stats `json:"stats"`
-	BaseStats Stats `json:"base_stats"`
-	Types     []struct {
-		Slot int `json:"slot"`
-		Type struct {
-			Name string `json:"name"`
-			URL  string `json:"url"`
-		} `json:"type"`
-	} `json:"types"`
-	ImageUrl string `json:"official-artwork"`
+	ID                int      `json:"id"`
+	Name              string   `json:"name"`
+	BaseExperience    int      `json:"base_experience"`
+	CurrentExperience int      `json:"current_experience"`
+	Height            int      `json:"height"`
+	Weight            int      `json:"weight"`
+	Stats             Stats    `json:"stats"`
+	BaseStats         Stats    `json:"base_stats"`
+	Types             []string `json:"types"`
+	ImageUrl          string   `json:"official-artwork"`
 }
 
 func (p Pokemon) Catch(pokeball PokeBall) (success bool) {
@@ -103,25 +83,14 @@ func (pokemon Pokemon) Print() {
 	fmt.Printf("Height: %v\n", pokemon.Height)
 	fmt.Printf("Weight: %v\n", pokemon.Weight)
 
-	fmt.Println("Abilies:")
-	for i := range pokemon.Abilities {
-		fmt.Printf(" - %s\n", pokemon.Abilities[i].Ability.Name)
-	}
-
-	fmt.Println("Forms:")
-	for i := range pokemon.Forms {
-		fmt.Printf(" - %s\n", pokemon.Forms[i].Name)
-	}
-
 	fmt.Println("Stats:")
 	fmt.Printf(" - Max hp: %v\n", pokemon.Stats.MaxHP)
 	fmt.Printf(" - Current hp: %v\n", pokemon.Stats.CurrentHP)
 	fmt.Printf(" - Damage: %v\n", pokemon.Stats.Damage)
-	fmt.Printf(" - Speed: %v\n", pokemon.Stats.Speed)
 
 	fmt.Println("Types:")
-	for i := range pokemon.Types {
-		fmt.Printf(" - %s\n", pokemon.Types[i].Type.Name)
+	for _, name := range pokemon.Types {
+		fmt.Printf(" - %s\n", name)
 	}
 }
 
