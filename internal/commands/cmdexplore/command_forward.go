@@ -104,7 +104,7 @@ func fight(conf *pokeapi.Config, pokemon entities.Pokemon) error {
 }
 
 func checkForEncounter(conf *pokeapi.Config) (string, bool, error) {
-	const encounterChance = 25
+	const encounterChance = 30
 
 	randNum := rand.Intn(100) + 1
 	if randNum > encounterChance {
