@@ -1,6 +1,7 @@
 package pokeapi
 
 import (
+	"fmt"
 	"image"
 	"net/http"
 
@@ -8,7 +9,8 @@ import (
 )
 
 func (c *Client) GetAsciiImage(inputURL string, size int) (string, error) {
-	if data, ok := c.cache.Get(inputURL); ok {
+	identifier := fmt.Sprintf("%s#%v", inputURL, size)
+	if data, ok := c.cache.Get(identifier); ok {
 		asciiImage := string(data)
 		return asciiImage, nil
 	}
@@ -19,7 +21,7 @@ func (c *Client) GetAsciiImage(inputURL string, size int) (string, error) {
 	}
 
 	asciiImage := generateAsciiImage(img, size)
-	c.cache.Add(inputURL, []byte(asciiImage))
+	c.cache.Add(identifier, []byte(asciiImage))
 	return asciiImage, nil
 }
 
