@@ -17,7 +17,8 @@ func CommandListTeam(conf *pokeapi.Config, _ ...string) error {
 	fmt.Printf("%v of %v pokemon are in your team\n", team.Size(), team.MaxSize)
 	fmt.Println("Pokemon in your team:")
 	for _, name := range pokemonNamesSorted {
-		fmt.Printf(" - %s\n", name)
+		pokemon, _ := team.Get(name)
+		fmt.Printf(" - %s (%v)\n", name, pokemon.GetLevel())
 	}
 
 	return nil

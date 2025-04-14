@@ -16,7 +16,8 @@ func CommandListPokebox(conf *pokeapi.Config, _ ...string) error {
 
 	fmt.Printf("Pokemon in your pokebox (%v):\n", len(pokebox))
 	for _, name := range pokebox.GetAllNamesSorted() {
-		fmt.Printf(" - %s\n", name)
+		pokemon := pokebox[name]
+		fmt.Printf(" - %s (%v)\n", name, pokemon.GetLevel())
 	}
 
 	return nil
