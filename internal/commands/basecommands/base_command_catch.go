@@ -44,9 +44,11 @@ func BaseCommandCatch(conf *pokeapi.Config, pokemon entities.Pokemon) error {
 		}
 
 		conf.PlayerData.Pokedex.Add(pokemon.Name)
-		fmt.Printf("%s was caught!\n", pokemon.Name)
+		pokemon.CurrentExperience = int(float64(pokemon.CurrentExperience) * 0.9)
+		fmt.Printf("%s (now level %v) was caught!\n", pokemon.Name, pokemon.GetLevel())
 
 		pokemonName := choosePokemonName(conf, pokemon.Name)
+
 		conf.PlayerData.Pokebox[pokemonName] = pokemon
 		fmt.Printf("%s was added to the pokebox\n", pokemonName)
 
