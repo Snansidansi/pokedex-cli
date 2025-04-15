@@ -56,7 +56,7 @@ func teamPokemonAttack(enemyPokemon, teamPokemon *entities.Pokemon, team *player
 		fmt.Printf("%s was defeated by %s!\n", enemyPokemon.Name, *team.ActivePokemon)
 
 		xpGain := enemyPokemon.BaseExperience * enemyPokemon.GetLevel()
-		xpGain = int(float64(xpGain) * 0.75)
+		xpGain = int(float64(xpGain) * 0.26)
 
 		fmt.Printf("You won the fight! All the Pokemon in your team gain %vxp.\n", xpGain)
 		team.AddExperience(xpGain)
