@@ -8,14 +8,21 @@ import (
 )
 
 func commandRight(conf *pokeapi.Config, _ ...string) error {
-	conf.CurrentLocationID += 1
+	counter := 0
 
-	location, err := conf.Client.GetLocation(fmt.Sprint(conf.CurrentLocationID))
-	if err != nil {
-		conf.CurrentLocationID -= 1
-		return errors.New("Cannot go right anymore. You are already in the last location.")
+	for counter < 5 {
+		conf.CurrentLocationID += 1
+
+		location, err := conf.Client.GetLocation(fmt.Sprint(conf.CurrentLocationID))
+		if err != nil {
+			counter++
+			continue
+		}
+
+		fmt.Printf("You are now in: %s\n", location.Name)
+		return commandForward(conf)
 	}
 
-	fmt.Printf("You are now in: %s\n", location.Name)
-	return commandForward(conf)
+	conf.CurrentLocationID -= counter
+	return errors.New("Cannot go right anymore. You are already in the last location.")
 }
