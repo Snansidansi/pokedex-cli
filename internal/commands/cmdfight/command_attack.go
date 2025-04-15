@@ -54,8 +54,12 @@ func teamPokemonAttack(enemyPokemon, teamPokemon *entities.Pokemon, team *player
 	if enemyDied {
 		fmt.Println("")
 		fmt.Printf("%s was defeated by %s!\n", enemyPokemon.Name, *team.ActivePokemon)
-		fmt.Printf("You won the fight! All the Pokemon in your team gain %vxp.\n", enemyPokemon.BaseExperience)
-		team.AddExperience(enemyPokemon.BaseExperience)
+
+		xpGain := enemyPokemon.BaseExperience * enemyPokemon.GetLevel()
+		xpGain = int(float64(xpGain) * 0.75)
+
+		fmt.Printf("You won the fight! All the Pokemon in your team gain %vxp.\n", xpGain)
+		team.AddExperience(xpGain)
 		team.WonFight = true
 		return repl.ExitReplError{}
 	}
