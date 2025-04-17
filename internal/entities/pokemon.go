@@ -129,13 +129,16 @@ func (pokemon *Pokemon) RecalculateStats() {
 	pokemon.Stats.MaxHP = pokemon.BaseStats.MaxHP + int(math.Pow(float64(currentLevel), 1.5))
 	pokemon.Stats.Damage = pokemon.BaseStats.Damage + int(math.Pow(float64(currentLevel), 1.2))
 
-	HPUpgrade := pokemon.Stats.MaxHP - oldMaxHP
-	pokemon.Stats.CurrentHP += HPUpgrade
+	if pokemon.Stats.CurrentHP > 0 {
+		HPUpgrade := pokemon.Stats.MaxHP - oldMaxHP
+		pokemon.Stats.CurrentHP += HPUpgrade
+	}
 }
 
 func (pokemon *Pokemon) TakeDamage(amount int) (pokemonDied bool) {
 	pokemon.Stats.CurrentHP -= amount
 	if pokemon.Stats.CurrentHP < 0 {
+		pokemon.Stats.CurrentHP = 0
 		return true
 	}
 	return false
