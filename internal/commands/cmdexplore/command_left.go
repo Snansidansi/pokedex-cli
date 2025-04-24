@@ -8,15 +8,16 @@ import (
 )
 
 func commandLeft(conf *pokeapi.Config, _ ...string) error {
-	lowerLocationID := conf.CurrentLocationID - 1
-	if lowerLocationID < 1 {
+	conf.CurrentLocationID--
+	if conf.CurrentLocationID < 1 {
+		conf.CurrentLocationID++
 		return errors.New("Cannot go left anymore. You already are in the first location.")
 	}
 
-	conf.CurrentLocationID = lowerLocationID
 	location, err := conf.Client.GetLocation(fmt.Sprint(conf.CurrentLocationID))
 	if err != nil {
-		return err
+		conf.CurrentLocationID++
+		return errors.New("The path the the next left location is to narrow.\nBut you can stop exploring and start from the location")
 	}
 
 	fmt.Printf("You are now in: %s\n", location.Name)
