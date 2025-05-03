@@ -2,6 +2,7 @@ package cmdmenu
 
 import (
 	"github.com/snansidansi/pokedex-cli/internal/commands"
+	"github.com/snansidansi/pokedex-cli/internal/commands/basecommands"
 )
 
 func GetCommands() map[string]commands.Command {
@@ -60,6 +61,11 @@ func GetCommands() map[string]commands.Command {
 			Name:        "explore",
 			Description: "Start exploring the specified area",
 			Callback:    commandExplore,
+		},
+		"inventory": {
+			Name:        "inventory",
+			Description: "List your inventory",
+			Callback:    basecommands.CommandInventory,
 		},
 	}
 }
